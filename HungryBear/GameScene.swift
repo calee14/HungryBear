@@ -22,17 +22,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //Fixed Delta
     var fixedDelta: CFTimeInterval = 1.0/60.0 //60 FPS
+    
     //Connect objects
-    var player: SKSpriteNode!
+    var player: Player!
     var obstaclelayer: SKNode!
-    var obstacleSource: SKNode!
+    var obstacleSource: Obstacle!
+    var creatureLayer: SKNode!
+    var creatureSource: Animals!
+    var wolf: Monster!
+    
+    //Initialize variables
     var spawnTimer: CFTimeInterval = 0
     var secondSpawnTimer: CFTimeInterval = 0
     var animalSpawnTimer: CFTimeInterval = 0
+    var randObstacleSpawnTimer: CFTimeInterval = 2.5
+    var randAnimalSpawnTimer: CFTimeInterval = 5
     var scrollSpd: CGFloat = 200
     var prevSpacePosition: CGPoint!
-    var creatureLayer: SKNode!
-    var creatureSource: Animals!
+    var points = 0
+    var highscore = 0
+    
+    //Connect UI objects
+    var pointsLabel: SKLabelNode!
+    var highscoreLabel: SKLabelNode!
     
     override func didMove(to view: SKView) {
         //Start your scene here
@@ -40,28 +52,41 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         //Get reference to the UI objects
         
-        //Connect spaceShip
-        player = self.childNode(withName: "player") as! SKSpriteNode
+        //Connect player
+        player = self.childNode(withName: "//player") as! Player
+        player.running()
         //Connect obstacleLayer
         obstaclelayer = self.childNode(withName: "obstacleLayer")
-        //Connect obstacle
-        obstacleSource = self.childNode(withName: "obstacle")
+        //Connect wolf
+        wolf = self.childNode(withName: "//wolf") as! Monster
+        wolf.monsterState = .walking
+        
+        //Connect obstacles
+        obstacleSource = self.childNode(withName: "obstacle") as! Obstacle
+        obstacleSource.physicsBody?.usesPreciseCollisionDetection = true
         creatureLayer = self.childNode(withName: "creatureLayer")
         creatureSource = self.childNode(withName: "creature") as! Animals
+        
+        //Connect UI objects
+        pointsLabel = childNode(withName: "pointsLabel") as! SKLabelNode
+        highscoreLabel = self.childNode(withName: "highscoreLabel") as! SKLabelNode
         
         //Declaring swipe gestures
         //Creating the Swipe Right
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(GameScene().swiped(_:)))
         swipeRight.direction = UISwipeGestureRecognizerDirection.right
         self.view?.addGestureRecognizer(swipeRight)
+        
         //Creating the Swipe Down
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(GameScene().swiped(_:)))
         swipeDown.direction = UISwipeGestureRecognizerDirection.down
         self.view?.addGestureRecognizer(swipeDown)
+        
         //Creating the SwipeUp
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(GameScene().swiped(_:)))
         swipeUp.direction = UISwipeGestureRecognizerDirection.up
         self.view?.addGestureRecognizer(swipeUp)
+        
         //Creating the SwipeLeft
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(GameScene().swiped(_:)))
         swipeLeft.direction = UISwipeGestureRecognizerDirection.left
@@ -77,6 +102,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         motionManager.startAccelerometerUpdates()
         motionManager.accelerometerUpdateInterval = 0.1
         print("starting up the acceleromter")
+        
+        //Set the score label to 0
+        pointsLabel.text = "\(points)"
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -90,13 +118,56 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let nodeA = contactA.node!
         let nodeB = contactB.node!
         
-        if nodeA.name == "creature" && nodeB.name == "obstalce" {
-            print("they collided")
+        if nodeA.name == "creature" && nodeB.name == "obstacle" {
+            print("the animal collided")
+            //Checks if it's the animal
+            if nodeA.name == "creature" {
+                print("found the creature")
+                //if we found the animals we check kill it
+                let nodeA = contactA.node as! Animals
+                
+                //Runs the death scene
+                if nodeA.position.x < 300 {
+                    print(nodeA.state)
+                    
+                    let deathScene = SKAction.run({
+                        nodeA.deathScene()
+                    })
+                    
+                    let sequence = SKAction.sequence([deathScene])
+                    run(sequence)
+                    
+                }
+            }
             return
-        } else if nodeB.name == "obstacle" && nodeA.name == "creature" {
-            print("they collided")
+            
+        } else if nodeA.name == "obstacle" && nodeB.name == "creature" {
+            print("the animal collided")
+            
+            //Checks if it's the animal
+            if nodeB.name == "creature" {
+                
+                //If we found it kill it
+                print("found the creature")
+                let nodeB = contactB.node as! Animals
+                
+                //Runs the death scene
+                if nodeB.position.x < 300 {
+                    print(nodeB.state)
+                    
+                    let deathScene = SKAction.run({
+                        nodeB.deathScene()
+                    })
+                    
+                    let sequence = SKAction.sequence([deathScene])
+                    run(sequence)
+                    
+                }
+            }
+            
             return
         }
+        
         //If any object with physics body collides with the frame boundaries
         if nodeA.name == nil {
             //nodeB.removeAllActions()
@@ -108,20 +179,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //If player collides with the obstacle
         if nodeA.name == "player" && nodeB.name == "obstacle"{
+            
+            //Runs the shake scene to give the player something to see
             let shakeScene = SKAction.run({
                 let shake = SKAction.init(named: "ShakeItUp")
                 for node in self.children {
                     node.run(shake!)
                 }
             })
+            
             self.player.run(shakeScene)
+            
         } else if nodeA.name == "player" && nodeB.name == "obstacle" {
+            
+            //Runs the shake scene to give the player something to see
             let shakeScene = SKAction.run({
                 let shake = SKAction.init(named: "ShakeItUp")
                 for node in self.children {
                     node.run(shake!)
                 }
             })
+            
             self.player.run(shakeScene)
         }
     }
@@ -135,11 +213,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //If the player collided with the obstacle start tp move the player back
         if nodeA.name == "player" && nodeB.name == "obstacle" {
+            //Moves the player back
             let move = SKAction.move(to: CGPoint(x: player.position.x - 75, y: player.position.y), duration: 1)
             let seq = SKAction.sequence([move])
             player.run(seq)
             nodeB.removeFromParent()
+            
         } else if nodeB.name == "player" && nodeA.name == "obstacle" {
+            //Moves the player back
             let move = SKAction.move(to: CGPoint(x: player.position.x - 75, y: player.position.y), duration: 1)
             let seq = SKAction.sequence([move])
             player.run(seq)
@@ -153,7 +234,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //The accelerometer
         updateAcellerometerData()
         
-        if player.position.x < 0 { print("GameOver") }
+        if player.position.x < 0 {
+            
+            let yourNextScene = GameScene(fileNamed: "GameScene")
+            let transition = SKTransition.moveIn(with: .right, duration: 1)
+            scene?.view?.presentScene(yourNextScene!, transition: transition)
+        }
         //Check direction
         //checkDirection()
         
@@ -165,6 +251,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         animalSpawnTimer += fixedDelta
         secondSpawnTimer += fixedDelta
         spawnTimer += fixedDelta
+    }
+    
+    func updatePoints() {
+        //Add points
+        points += 5
+        
+        //Update the label
+        pointsLabel.text = String(points)
     }
     
     func swiped(_ gesture: UIGestureRecognizer) {
@@ -225,7 +319,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for animal in creatureLayer.children as! [Animals] {
             
             //If the animal is moving on it's own let it be
-            if animal.state != .still { continue }
+            if animal.state == .moving {
+                
+                //Animal is moving
+                animal.startMoving()
+                
+                continue
+            }
             
             let position = creatureLayer.convert(animal.position, to: self)
             
@@ -235,20 +335,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             } else if position.x <= (self.scene?.size.width)! / 2 {
                 //If we reached the center start moving to add flare
                 animal.state = .moving
+                animal.getValues()
                 animal.startMoving()
             }
         }
         
         //Add a new animal
-        if animalSpawnTimer > 1 {
+        if animalSpawnTimer > randAnimalSpawnTimer {
             
             let newAnimal = creatureSource.copy() as! Animals
             creatureLayer.addChild(newAnimal)
-            newAnimal.state = .still
             let newPosition = creatureSource.position
             newAnimal.position = self.convert(newPosition, to: creatureLayer)
+            newAnimal.gameScene = self
+            newAnimal.state = .still
             
+            //Reset the animal spawnTimer
             animalSpawnTimer = 0
+            
+            //Get a new spawn time
+            randAnimalSpawnTimer = CFTimeInterval(arc4random_uniform(UInt32(4.5)) + UInt32(3.5))
         }
     }
     
@@ -258,7 +364,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         obstaclelayer.position.x -= scrollSpd * CGFloat(fixedDelta)
         
         //Loop through the obstacle layer nodes
-        for obstacles in obstaclelayer.children as! [SKSpriteNode] {
+        for obstacles in obstaclelayer.children as! [Obstacle] {
             
             //Set reference to the obstacle position
             let obstaclePosition = obstaclelayer.convert(obstacles.position, to: self)
@@ -273,10 +379,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
                 
         //Add new obstacles
-        if spawnTimer >= 2.5 {
+        if spawnTimer >= randObstacleSpawnTimer {
             
             //Set reference of the new obstacle
-            let newObstacle = obstacleSource.copy() as! SKNode
+            let newObstacle = obstacleSource.copy() as! Obstacle
+            newObstacle.texture = SKTexture(imageNamed: newObstacle.getTexture())
+            newObstacle.resetEverything()
+            print("new obstacle texture \(newObstacle.texture)")
             obstaclelayer.addChild(newObstacle)
             
             //Generate new random y position
@@ -286,7 +395,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             newObstacle.position = self.convert(randomPosition, to: obstaclelayer)
             
             //Add second obstacle to bottom half
-            let secondObstacle = obstacleSource.copy() as! SKNode
+            let secondObstacle = obstacleSource.copy() as! Obstacle
+            secondObstacle.texture = SKTexture(imageNamed: secondObstacle.getTexture())
+            secondObstacle.resetEverything()
+            print("new obstacle texture \(secondObstacle.texture)")
             obstaclelayer.addChild(secondObstacle)
             
             //Generate the random y position
@@ -297,6 +409,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             //Reset Timer
             spawnTimer = 0
+            
+            //Get a new rand timer
+            randObstacleSpawnTimer = CFTimeInterval(arc4random_uniform(UInt32(3.5)) + UInt32(2.5))
             
         }
     }
