@@ -17,6 +17,8 @@
 		B3209CA31F13E23B006DA8EA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3209CA11F13E23B006DA8EA /* LaunchScreen.storyboard */; };
 		B3209CAB1F13E346006DA8EA /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3209CAA1F13E346006DA8EA /* CGFloat+Extensions.swift */; };
 		B3209CAD1F141A6E006DA8EA /* Animals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3209CAC1F141A6E006DA8EA /* Animals.swift */; };
+		B39F49651F1810BB00D95ED6 /* bottom-background.png in Resources */ = {isa = PBXBuildFile; fileRef = B39F49641F1810BB00D95ED6 /* bottom-background.png */; };
+		B39F49671F1811EB00D95ED6 /* background2.png in Resources */ = {isa = PBXBuildFile; fileRef = B39F49661F1811EB00D95ED6 /* background2.png */; };
 		B3D5112D1F1696DE00653C3B /* color-large.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510951F1696DE00653C3B /* color-large.png */; };
 		B3D5112E1F1696DE00653C3B /* color-small.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510961F1696DE00653C3B /* color-small.png */; };
 		B3D5112F1F1696DE00653C3B /* dead-pine.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510971F1696DE00653C3B /* dead-pine.png */; };
@@ -81,18 +83,6 @@
 		B3D5116A1F1696DE00653C3B /* grass-shadow-5.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510D21F1696DE00653C3B /* grass-shadow-5.png */; };
 		B3D5116B1F1696DE00653C3B /* grass-shadow-6.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510D31F1696DE00653C3B /* grass-shadow-6.png */; };
 		B3D5116C1F1696DE00653C3B /* grass-shadow1.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510D41F1696DE00653C3B /* grass-shadow1.png */; };
-		B3D5116D1F1696DE00653C3B /* log-1-dark-left.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510D51F1696DE00653C3B /* log-1-dark-left.png */; };
-		B3D5116E1F1696DE00653C3B /* log-1-dark-right.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510D61F1696DE00653C3B /* log-1-dark-right.png */; };
-		B3D5116F1F1696DE00653C3B /* log-1-light-brown-left.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510D71F1696DE00653C3B /* log-1-light-brown-left.png */; };
-		B3D511701F1696DE00653C3B /* log-1-light-brown-right.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510D81F1696DE00653C3B /* log-1-light-brown-right.png */; };
-		B3D511711F1696DE00653C3B /* log-1-red-left.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510D91F1696DE00653C3B /* log-1-red-left.png */; };
-		B3D511721F1696DE00653C3B /* log-1-red-right.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510DA1F1696DE00653C3B /* log-1-red-right.png */; };
-		B3D511731F1696DE00653C3B /* log-2-dark-left.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510DB1F1696DE00653C3B /* log-2-dark-left.png */; };
-		B3D511741F1696DE00653C3B /* log-2-dark-right.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510DC1F1696DE00653C3B /* log-2-dark-right.png */; };
-		B3D511751F1696DE00653C3B /* log-2-light-brown-left.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510DD1F1696DE00653C3B /* log-2-light-brown-left.png */; };
-		B3D511761F1696DE00653C3B /* log-2-light-brown-right.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510DE1F1696DE00653C3B /* log-2-light-brown-right.png */; };
-		B3D511771F1696DE00653C3B /* log-2-red-left.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510DF1F1696DE00653C3B /* log-2-red-left.png */; };
-		B3D511781F1696DE00653C3B /* log-2-red-right.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510E01F1696DE00653C3B /* log-2-red-right.png */; };
 		B3D511791F1696DE00653C3B /* pine-tree-large-bright-green.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510E11F1696DE00653C3B /* pine-tree-large-bright-green.png */; };
 		B3D5117A1F1696DE00653C3B /* pine-tree-large-dark-green.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510E21F1696DE00653C3B /* pine-tree-large-dark-green.png */; };
 		B3D5117B1F1696DE00653C3B /* pine-tree-large-dark-medium-green.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510E31F1696DE00653C3B /* pine-tree-large-dark-medium-green.png */; };
@@ -204,6 +194,19 @@
 		B3D512071F16DBBB00653C3B /* idle0029.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D511E91F16DBBB00653C3B /* idle0029.png */; };
 		B3D512081F16DBBB00653C3B /* idle0030.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D511EA1F16DBBB00653C3B /* idle0030.png */; };
 		B3D5120A1F16DD2800653C3B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D512091F16DD2800653C3B /* Player.swift */; };
+		B3D5120E1F1702CB00653C3B /* log-1-light-brown-left.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D5120D1F1702CB00653C3B /* log-1-light-brown-left.png */; };
+		B3D512101F17D54100653C3B /* log-1-light-brown-right.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D5120F1F17D54100653C3B /* log-1-light-brown-right.png */; };
+		B3D512121F17D6EE00653C3B /* log-1-dark-left.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D512111F17D6EE00653C3B /* log-1-dark-left.png */; };
+		B3D512141F17D6FF00653C3B /* log-1-dark-right.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D512131F17D6FF00653C3B /* log-1-dark-right.png */; };
+		B3D512161F17D7BD00653C3B /* log-1-red-left.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D512151F17D7BD00653C3B /* log-1-red-left.png */; };
+		B3D512181F17D7C600653C3B /* log-1-red-right.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D512171F17D7C600653C3B /* log-1-red-right.png */; };
+		B3D5121A1F17D87F00653C3B /* log-2-dark-left.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D512191F17D87F00653C3B /* log-2-dark-left.png */; };
+		B3D5121C1F17D89100653C3B /* log-2-dark-right.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D5121B1F17D89100653C3B /* log-2-dark-right.png */; };
+		B3D5121E1F17D9A500653C3B /* log-2-light-brown-left.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D5121D1F17D9A500653C3B /* log-2-light-brown-left.png */; };
+		B3D512201F17D9B700653C3B /* log-2-light-brown-right.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D5121F1F17D9B700653C3B /* log-2-light-brown-right.png */; };
+		B3D512221F17DA2E00653C3B /* log-2-red-left.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D512211F17DA2E00653C3B /* log-2-red-left.png */; };
+		B3D512241F17DA3600653C3B /* log-2-red-right.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D512231F17DA3600653C3B /* log-2-red-right.png */; };
+		B3D5122A1F17F0FD00653C3B /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D512291F17F0FD00653C3B /* background.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -219,6 +222,8 @@
 		B3209CA41F13E23B006DA8EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3209CAA1F13E346006DA8EA /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
 		B3209CAC1F141A6E006DA8EA /* Animals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animals.swift; sourceTree = "<group>"; };
+		B39F49641F1810BB00D95ED6 /* bottom-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottom-background.png"; sourceTree = "<group>"; };
+		B39F49661F1811EB00D95ED6 /* background2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background2.png; sourceTree = "<group>"; };
 		B3D510951F1696DE00653C3B /* color-large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "color-large.png"; sourceTree = "<group>"; };
 		B3D510961F1696DE00653C3B /* color-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "color-small.png"; sourceTree = "<group>"; };
 		B3D510971F1696DE00653C3B /* dead-pine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dead-pine.png"; sourceTree = "<group>"; };
@@ -283,18 +288,6 @@
 		B3D510D21F1696DE00653C3B /* grass-shadow-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grass-shadow-5.png"; sourceTree = "<group>"; };
 		B3D510D31F1696DE00653C3B /* grass-shadow-6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grass-shadow-6.png"; sourceTree = "<group>"; };
 		B3D510D41F1696DE00653C3B /* grass-shadow1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grass-shadow1.png"; sourceTree = "<group>"; };
-		B3D510D51F1696DE00653C3B /* log-1-dark-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-1-dark-left.png"; sourceTree = "<group>"; };
-		B3D510D61F1696DE00653C3B /* log-1-dark-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-1-dark-right.png"; sourceTree = "<group>"; };
-		B3D510D71F1696DE00653C3B /* log-1-light-brown-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-1-light-brown-left.png"; sourceTree = "<group>"; };
-		B3D510D81F1696DE00653C3B /* log-1-light-brown-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-1-light-brown-right.png"; sourceTree = "<group>"; };
-		B3D510D91F1696DE00653C3B /* log-1-red-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-1-red-left.png"; sourceTree = "<group>"; };
-		B3D510DA1F1696DE00653C3B /* log-1-red-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-1-red-right.png"; sourceTree = "<group>"; };
-		B3D510DB1F1696DE00653C3B /* log-2-dark-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-2-dark-left.png"; sourceTree = "<group>"; };
-		B3D510DC1F1696DE00653C3B /* log-2-dark-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-2-dark-right.png"; sourceTree = "<group>"; };
-		B3D510DD1F1696DE00653C3B /* log-2-light-brown-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-2-light-brown-left.png"; sourceTree = "<group>"; };
-		B3D510DE1F1696DE00653C3B /* log-2-light-brown-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-2-light-brown-right.png"; sourceTree = "<group>"; };
-		B3D510DF1F1696DE00653C3B /* log-2-red-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-2-red-left.png"; sourceTree = "<group>"; };
-		B3D510E01F1696DE00653C3B /* log-2-red-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-2-red-right.png"; sourceTree = "<group>"; };
 		B3D510E11F1696DE00653C3B /* pine-tree-large-bright-green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pine-tree-large-bright-green.png"; sourceTree = "<group>"; };
 		B3D510E21F1696DE00653C3B /* pine-tree-large-dark-green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pine-tree-large-dark-green.png"; sourceTree = "<group>"; };
 		B3D510E31F1696DE00653C3B /* pine-tree-large-dark-medium-green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pine-tree-large-dark-medium-green.png"; sourceTree = "<group>"; };
@@ -406,6 +399,19 @@
 		B3D511E91F16DBBB00653C3B /* idle0029.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = idle0029.png; sourceTree = "<group>"; };
 		B3D511EA1F16DBBB00653C3B /* idle0030.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = idle0030.png; sourceTree = "<group>"; };
 		B3D512091F16DD2800653C3B /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		B3D5120D1F1702CB00653C3B /* log-1-light-brown-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-1-light-brown-left.png"; sourceTree = "<group>"; };
+		B3D5120F1F17D54100653C3B /* log-1-light-brown-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-1-light-brown-right.png"; sourceTree = "<group>"; };
+		B3D512111F17D6EE00653C3B /* log-1-dark-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-1-dark-left.png"; sourceTree = "<group>"; };
+		B3D512131F17D6FF00653C3B /* log-1-dark-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-1-dark-right.png"; sourceTree = "<group>"; };
+		B3D512151F17D7BD00653C3B /* log-1-red-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-1-red-left.png"; sourceTree = "<group>"; };
+		B3D512171F17D7C600653C3B /* log-1-red-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-1-red-right.png"; sourceTree = "<group>"; };
+		B3D512191F17D87F00653C3B /* log-2-dark-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-2-dark-left.png"; sourceTree = "<group>"; };
+		B3D5121B1F17D89100653C3B /* log-2-dark-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-2-dark-right.png"; sourceTree = "<group>"; };
+		B3D5121D1F17D9A500653C3B /* log-2-light-brown-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-2-light-brown-left.png"; sourceTree = "<group>"; };
+		B3D5121F1F17D9B700653C3B /* log-2-light-brown-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-2-light-brown-right.png"; sourceTree = "<group>"; };
+		B3D512211F17DA2E00653C3B /* log-2-red-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-2-red-left.png"; sourceTree = "<group>"; };
+		B3D512231F17DA3600653C3B /* log-2-red-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-2-red-right.png"; sourceTree = "<group>"; };
+		B3D512291F17F0FD00653C3B /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -462,6 +468,9 @@
 		B3D510941F1696DE00653C3B /* assets.atlas */ = {
 			isa = PBXGroup;
 			children = (
+				B3D512291F17F0FD00653C3B /* background.png */,
+				B39F49661F1811EB00D95ED6 /* background2.png */,
+				B39F49641F1810BB00D95ED6 /* bottom-background.png */,
 				B3D511CD1F16DBBA00653C3B /* idle0001.png */,
 				B3D511CE1F16DBBA00653C3B /* idle0002.png */,
 				B3D511CF1F16DBBA00653C3B /* idle0003.png */,
@@ -556,18 +565,18 @@
 				B3D510D21F1696DE00653C3B /* grass-shadow-5.png */,
 				B3D510D31F1696DE00653C3B /* grass-shadow-6.png */,
 				B3D510D41F1696DE00653C3B /* grass-shadow1.png */,
-				B3D510D51F1696DE00653C3B /* log-1-dark-left.png */,
-				B3D510D61F1696DE00653C3B /* log-1-dark-right.png */,
-				B3D510D71F1696DE00653C3B /* log-1-light-brown-left.png */,
-				B3D510D81F1696DE00653C3B /* log-1-light-brown-right.png */,
-				B3D510D91F1696DE00653C3B /* log-1-red-left.png */,
-				B3D510DA1F1696DE00653C3B /* log-1-red-right.png */,
-				B3D510DB1F1696DE00653C3B /* log-2-dark-left.png */,
-				B3D510DC1F1696DE00653C3B /* log-2-dark-right.png */,
-				B3D510DD1F1696DE00653C3B /* log-2-light-brown-left.png */,
-				B3D510DE1F1696DE00653C3B /* log-2-light-brown-right.png */,
-				B3D510DF1F1696DE00653C3B /* log-2-red-left.png */,
-				B3D510E01F1696DE00653C3B /* log-2-red-right.png */,
+				B3D512131F17D6FF00653C3B /* log-1-dark-right.png */,
+				B3D512111F17D6EE00653C3B /* log-1-dark-left.png */,
+				B3D5120F1F17D54100653C3B /* log-1-light-brown-right.png */,
+				B3D5120D1F1702CB00653C3B /* log-1-light-brown-left.png */,
+				B3D512151F17D7BD00653C3B /* log-1-red-left.png */,
+				B3D512171F17D7C600653C3B /* log-1-red-right.png */,
+				B3D512191F17D87F00653C3B /* log-2-dark-left.png */,
+				B3D5121B1F17D89100653C3B /* log-2-dark-right.png */,
+				B3D5121D1F17D9A500653C3B /* log-2-light-brown-left.png */,
+				B3D5121F1F17D9B700653C3B /* log-2-light-brown-right.png */,
+				B3D512211F17DA2E00653C3B /* log-2-red-left.png */,
+				B3D512231F17DA3600653C3B /* log-2-red-right.png */,
 				B3D510E11F1696DE00653C3B /* pine-tree-large-bright-green.png */,
 				B3D510E21F1696DE00653C3B /* pine-tree-large-dark-green.png */,
 				B3D510E31F1696DE00653C3B /* pine-tree-large-dark-medium-green.png */,
@@ -713,18 +722,19 @@
 				B3D5118C1F1696DE00653C3B /* run0008.png in Resources */,
 				B3D5114C1F1696DE00653C3B /* death0028.png in Resources */,
 				B3D5115F1F1696DE00653C3B /* death0047.png in Resources */,
-				B3D511711F1696DE00653C3B /* log-1-red-left.png in Resources */,
+				B3D5120E1F1702CB00653C3B /* log-1-light-brown-left.png in Resources */,
 				B3209C9E1F13E23B006DA8EA /* Main.storyboard in Resources */,
+				B3D512221F17DA2E00653C3B /* log-2-red-left.png in Resources */,
 				B3D5117D1F1696DE00653C3B /* pine-tree-medium-bright-green.png in Resources */,
 				B3D5118D1F1696DE00653C3B /* run0009.png in Resources */,
 				B3D511BC1F1696DE00653C3B /* wolfWALKright (12).png in Resources */,
 				B3D511F71F16DBBB00653C3B /* idle0013.png in Resources */,
 				B3D511571F1696DE00653C3B /* death0039.png in Resources */,
+				B3D512181F17D7C600653C3B /* log-1-red-right.png in Resources */,
 				B3D511991F1696DE00653C3B /* stump-4.png in Resources */,
 				B3D511B61F1696DE00653C3B /* wolfIMPACTeffect (7).png in Resources */,
 				B3D5118E1F1696DE00653C3B /* run0010.png in Resources */,
 				B3209C951F13E23B006DA8EA /* GameScene.sks in Resources */,
-				B3D511771F1696DE00653C3B /* log-2-red-left.png in Resources */,
 				B3D511381F1696DE00653C3B /* death0008.png in Resources */,
 				B3D511301F1696DE00653C3B /* dead-tree-1.png in Resources */,
 				B3D511641F1696DE00653C3B /* fallen-pine-dark-green.png in Resources */,
@@ -752,15 +762,12 @@
 				B3D5117B1F1696DE00653C3B /* pine-tree-large-dark-medium-green.png in Resources */,
 				B3D5119E1F1696DE00653C3B /* stump-9.png in Resources */,
 				B3D5113D1F1696DE00653C3B /* death0013.png in Resources */,
-				B3D511761F1696DE00653C3B /* log-2-light-brown-right.png in Resources */,
 				B3D511531F1696DE00653C3B /* death0035.png in Resources */,
 				B3D511C31F1696DE00653C3B /* wolfWALKright (8).png in Resources */,
 				B3D511561F1696DE00653C3B /* death0038.png in Resources */,
-				B3D511731F1696DE00653C3B /* log-2-dark-left.png in Resources */,
 				B3D511FC1F16DBBB00653C3B /* idle0018.png in Resources */,
 				B3D511481F1696DE00653C3B /* death0024.png in Resources */,
 				B3D511ED1F16DBBB00653C3B /* idle0003.png in Resources */,
-				B3D511751F1696DE00653C3B /* log-2-light-brown-left.png in Resources */,
 				B3D511321F1696DE00653C3B /* death0002.png in Resources */,
 				B3D511A11F1696DE00653C3B /* wolfATTACKright (11).png in Resources */,
 				B3D511F51F16DBBB00653C3B /* idle0011.png in Resources */,
@@ -778,22 +785,21 @@
 				B3D511F01F16DBBB00653C3B /* idle0006.png in Resources */,
 				B3D511851F1696DE00653C3B /* run0001.png in Resources */,
 				B3D511911F1696DE00653C3B /* run0013.png in Resources */,
-				B3D5116D1F1696DE00653C3B /* log-1-dark-left.png in Resources */,
 				B3D511331F1696DE00653C3B /* death0003.png in Resources */,
 				B3D5114A1F1696DE00653C3B /* death0026.png in Resources */,
+				B3D5122A1F17F0FD00653C3B /* background.png in Resources */,
 				B3D5118F1F1696DE00653C3B /* run0011.png in Resources */,
 				B3D511891F1696DE00653C3B /* run0005.png in Resources */,
 				B3D5115E1F1696DE00653C3B /* death0046.png in Resources */,
 				B3D5117A1F1696DE00653C3B /* pine-tree-large-dark-green.png in Resources */,
-				B3D5116F1F1696DE00653C3B /* log-1-light-brown-left.png in Resources */,
 				B3D5116A1F1696DE00653C3B /* grass-shadow-5.png in Resources */,
 				B3D511AB1F1696DE00653C3B /* wolfATTACKright (7).png in Resources */,
 				B3D511BE1F1696DE00653C3B /* wolfWALKright (3).png in Resources */,
 				B3D511961F1696DE00653C3B /* stump-1.png in Resources */,
+				B3D512141F17D6FF00653C3B /* log-1-dark-right.png in Resources */,
 				B3D5115D1F1696DE00653C3B /* death0045.png in Resources */,
 				B3D511A71F1696DE00653C3B /* wolfATTACKright (3).png in Resources */,
 				B3D511621F1696DE00653C3B /* death0050.png in Resources */,
-				B3D511701F1696DE00653C3B /* log-1-light-brown-right.png in Resources */,
 				B3D511FD1F16DBBB00653C3B /* idle0019.png in Resources */,
 				B3D511AE1F1696DE00653C3B /* wolfIMPACTeffect (1).png in Resources */,
 				B3D511471F1696DE00653C3B /* death0023.png in Resources */,
@@ -812,8 +818,6 @@
 				B3D511EE1F16DBBB00653C3B /* idle0004.png in Resources */,
 				B3D5117E1F1696DE00653C3B /* pine-tree-medium-dark-green.png in Resources */,
 				B3D511611F1696DE00653C3B /* death0049.png in Resources */,
-				B3D511741F1696DE00653C3B /* log-2-dark-right.png in Resources */,
-				B3D511781F1696DE00653C3B /* log-2-red-right.png in Resources */,
 				B3D5114E1F1696DE00653C3B /* death0030.png in Resources */,
 				B3D5115A1F1696DE00653C3B /* death0042.png in Resources */,
 				B3D511441F1696DE00653C3B /* death0020.png in Resources */,
@@ -828,11 +832,13 @@
 				B3D511BB1F1696DE00653C3B /* wolfWALKright (11).png in Resources */,
 				B3D511591F1696DE00653C3B /* death0041.png in Resources */,
 				B3D511FF1F16DBBB00653C3B /* idle0021.png in Resources */,
+				B3D512121F17D6EE00653C3B /* log-1-dark-left.png in Resources */,
 				B3D5115C1F1696DE00653C3B /* death0044.png in Resources */,
 				B3D511681F1696DE00653C3B /* grass-shadow-3.png in Resources */,
 				B3D511C41F1696DE00653C3B /* wolfWALKright (9).png in Resources */,
 				B3D5116B1F1696DE00653C3B /* grass-shadow-6.png in Resources */,
 				B3D511F21F16DBBB00653C3B /* idle0008.png in Resources */,
+				B3D5121E1F17D9A500653C3B /* log-2-light-brown-left.png in Resources */,
 				B3D5114D1F1696DE00653C3B /* death0029.png in Resources */,
 				B3D511981F1696DE00653C3B /* stump-3.png in Resources */,
 				B3D511CC1F16DB4C00653C3B /* Runner.sks in Resources */,
@@ -841,8 +847,11 @@
 				B3D511AC1F1696DE00653C3B /* wolfATTACKright (8).png in Resources */,
 				B3D511B71F1696DE00653C3B /* wolfIMPACTeffect (8).png in Resources */,
 				B3D5118A1F1696DE00653C3B /* run0006.png in Resources */,
+				B3D5121A1F17D87F00653C3B /* log-2-dark-left.png in Resources */,
+				B3D512241F17DA3600653C3B /* log-2-red-right.png in Resources */,
 				B3D511361F1696DE00653C3B /* death0006.png in Resources */,
 				B3D5119F1F1696DE00653C3B /* wolfATTACKright (1).png in Resources */,
+				B3D512101F17D54100653C3B /* log-1-light-brown-right.png in Resources */,
 				B3D511411F1696DE00653C3B /* death0017.png in Resources */,
 				B3D511941F1696DE00653C3B /* run0016.png in Resources */,
 				B3D511EC1F16DBBB00653C3B /* idle0002.png in Resources */,
@@ -851,34 +860,36 @@
 				B3D511581F1696DE00653C3B /* death0040.png in Resources */,
 				B3D511F11F16DBBB00653C3B /* idle0007.png in Resources */,
 				B3D5119D1F1696DE00653C3B /* stump-8.png in Resources */,
+				B3D5121C1F17D89100653C3B /* log-2-dark-right.png in Resources */,
 				B3D511B11F1696DE00653C3B /* wolfIMPACTeffect (2).png in Resources */,
 				B3D511EB1F16DBBB00653C3B /* idle0001.png in Resources */,
 				B3209CA31F13E23B006DA8EA /* LaunchScreen.storyboard in Resources */,
 				B3D512071F16DBBB00653C3B /* idle0029.png in Resources */,
 				B3209C971F13E23B006DA8EA /* Actions.sks in Resources */,
+				B39F49671F1811EB00D95ED6 /* background2.png in Resources */,
 				B3D5112D1F1696DE00653C3B /* color-large.png in Resources */,
 				B3D5119A1F1696DE00653C3B /* stump-5.png in Resources */,
 				B3D511B41F1696DE00653C3B /* wolfIMPACTeffect (5).png in Resources */,
 				B3D512031F16DBBB00653C3B /* idle0025.png in Resources */,
 				B3D511351F1696DE00653C3B /* death0005.png in Resources */,
 				B3D511371F1696DE00653C3B /* death0007.png in Resources */,
-				B3D511721F1696DE00653C3B /* log-1-red-right.png in Resources */,
 				B3D511451F1696DE00653C3B /* death0021.png in Resources */,
 				B3D511F31F16DBBB00653C3B /* idle0009.png in Resources */,
 				B3D511671F1696DE00653C3B /* grass-shadow-2.png in Resources */,
-				B3D5116E1F1696DE00653C3B /* log-1-dark-right.png in Resources */,
 				B3D511F81F16DBBB00653C3B /* idle0014.png in Resources */,
 				B3D511341F1696DE00653C3B /* death0004.png in Resources */,
 				B3D512051F16DBBB00653C3B /* idle0027.png in Resources */,
 				B3D511A31F1696DE00653C3B /* wolfATTACKright (13).png in Resources */,
 				B3D5113A1F1696DE00653C3B /* death0010.png in Resources */,
 				B3D511F91F16DBBB00653C3B /* idle0015.png in Resources */,
+				B3D512201F17D9B700653C3B /* log-2-light-brown-right.png in Resources */,
 				B3D511691F1696DE00653C3B /* grass-shadow-4.png in Resources */,
 				B3D5113F1F1696DE00653C3B /* death0015.png in Resources */,
 				B3D511C61F1697E700653C3B /* Wolf.sks in Resources */,
 				B3D5112F1F1696DE00653C3B /* dead-pine.png in Resources */,
 				B3D511BF1F1696DE00653C3B /* wolfWALKright (4).png in Resources */,
 				B3D512041F16DBBB00653C3B /* idle0026.png in Resources */,
+				B39F49651F1810BB00D95ED6 /* bottom-background.png in Resources */,
 				B3D512061F16DBBB00653C3B /* idle0028.png in Resources */,
 				B3D5115B1F1696DE00653C3B /* death0043.png in Resources */,
 				B3D5118B1F1696DE00653C3B /* run0007.png in Resources */,
@@ -892,6 +903,7 @@
 				B3D511A61F1696DE00653C3B /* wolfATTACKright (2).png in Resources */,
 				B3D511A41F1696DE00653C3B /* wolfATTACKright (14).png in Resources */,
 				B3D5119B1F1696DE00653C3B /* stump-6.png in Resources */,
+				B3D512161F17D7BD00653C3B /* log-1-red-left.png in Resources */,
 				B3D511C11F1696DE00653C3B /* wolfWALKright (6).png in Resources */,
 				B3D511601F1696DE00653C3B /* death0048.png in Resources */,
 				B3D511A51F1696DE00653C3B /* wolfATTACKright (15).png in Resources */,

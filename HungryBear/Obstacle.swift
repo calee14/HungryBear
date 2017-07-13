@@ -73,23 +73,23 @@ class Obstacle: SKSpriteNode {
         if type == "log" {
             
             //Type
-            if randNum < 25 {
+            if randNum < 0 {
                 num = "-1"
             } else if randNum < 50 {
                 num = "-2"
             }
             
             //Color
-            if randColor < 16 {
+            if randColor < 0 {
                 color = "-dark"
-            } else if randColor < 32 {
+            } else if randColor < 0 {
                 color = "-light-brown"
             } else if randColor < 50 {
                 color = "-red"
             }
             
             //Side
-            if randSide < 25 {
+            if randSide < 0  {
                 side = "-right"
             } else if randSide < 50 {
                 side = "-left"
@@ -105,9 +105,8 @@ class Obstacle: SKSpriteNode {
         //Accessing the old and in with the new
         let size = self.texture?.size()
         
-        let physics = SKPhysicsBody(rectangleOf: size!, center: CGPoint(x: 0 , y: 0))
-        
-        //Sine we reset the hit box we have to reset the properties as well
+        let physics = SKPhysicsBody(texture: self.texture!, alphaThreshold: 0.9 , size: size!)
+        //Since we reset the hit box we have to reset the properties as well
         physics.categoryBitMask = 1
         physics.collisionBitMask = 0
         physics.contactTestBitMask = 2
@@ -152,7 +151,7 @@ class Obstacle: SKSpriteNode {
         super.init(texture: texture, color: color, size: size)
         
         //Set the physical properties
-        physicsBody = SKPhysicsBody(rectangleOf: size, center: CGPoint(x: 0, y: size.width / 2))
+        physicsBody = SKPhysicsBody(texture: texture, alphaThreshold: 0.9, size: size)
         physicsBody?.categoryBitMask = 1
         physicsBody?.collisionBitMask = 0
         physicsBody?.contactTestBitMask = 2
