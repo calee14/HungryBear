@@ -30,12 +30,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var creatureLayer: SKNode!
     var creatureSource: Animals!
     var wolf: Monster!
+    var groundSource: SKSpriteNode!
+    var groundSource2: SKSpriteNode!
+    var bottomSource: SKSpriteNode!
+    var bottomSource2: SKSpriteNode!
     
     //Initialize variables
     var spawnTimer: CFTimeInterval = 0
     var secondSpawnTimer: CFTimeInterval = 0
     var animalSpawnTimer: CFTimeInterval = 0
-    var randObstacleSpawnTimer: CFTimeInterval = 1.5
+    var randObstacleSpawnTimer: CFTimeInterval = 1
     var randAnimalSpawnTimer: CFTimeInterval = 5
     var scrollSpd: CGFloat = 200
     var prevSpacePosition: CGPoint!
@@ -58,11 +62,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Connect player
         player = self.childNode(withName: "//player") as! Player
         player.running()
+        
         //Connect obstacleLayer
         obstaclelayer = self.childNode(withName: "obstacleLayer")
         //Connect wolf
         wolf = self.childNode(withName: "//wolf") as! Monster
         wolf.monsterState = .walking
+        
+        //Connect scrollLayer
+        groundSource2 = self.childNode(withName: "groundSource2") as! SKSpriteNode
+        groundSource = self.childNode(withName: "groundSource") as! SKSpriteNode
+        bottomSource = self.childNode(withName: "bottomSource") as! SKSpriteNode
+        bottomSource2 = self.childNode(withName: "bottomSource2") as! SKSpriteNode
         
         //Connect obstacles
         obstacleSource = self.childNode(withName: "obstacle") as! Obstacle
@@ -295,13 +306,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Check direction
         //checkDirection()
-        print(player.position)
+        
+        scroller(spd: scrollSpd)
+        
+        //Updates the animals
         updateAnimals()
+        
         //Spawns the obstacles
         updateObstacles()
         
         //update time
-        
         animalSpawnTimer += fixedDelta
         secondSpawnTimer += fixedDelta
         spawnTimer += fixedDelta
@@ -315,6 +329,43 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Update the label
         pointsLabel.text = String(points)
+    }
+    
+    func scroller(spd: CGFloat) {
+        
+        //Scrolls the world
+        
+        //Scroll the main ground
+        groundSource.position.x -= (spd ) * CGFloat(fixedDelta)
+        groundSource2.position.x -= (spd) * CGFloat(fixedDelta)
+        
+        //Scroll the bottom background
+        bottomSource.position.x -= spd * CGFloat(fixedDelta)
+        bottomSource2.position.x -= spd * CGFloat(fixedDelta)
+
+        //Check the grounds
+        if(groundSource.position.x < -groundSource.size.width)
+        {
+            groundSource.position = CGPoint(x: groundSource.position.x + groundSource2.size.width * 2, y: groundSource.position.y)
+        }
+        
+        if(groundSource2.position.x < -groundSource2.size.width )
+        {
+            groundSource2.position = CGPoint(x: groundSource2.position.x + groundSource.size.width * 2, y: groundSource2.position.y)
+            
+        }
+        
+        //Check the bottom background
+        if(bottomSource.position.x < -bottomSource.size.width)
+        {
+            bottomSource.position = CGPoint(x: bottomSource.position.x + bottomSource2.size.width * 2, y: bottomSource.position.y)
+        }
+        
+        if(bottomSource2.position.x < -bottomSource2.size.width )
+        {
+            bottomSource2.position = CGPoint(x: bottomSource2.position.x + bottomSource.size.width * 2, y: bottomSource2.position.y)
+            
+        }
     }
     
     func distanceFromMonster() {
@@ -345,6 +396,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func swiped(_ gesture: UIGestureRecognizer) {
         
+        //Checks if we are swiping
+        
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             //Switch function if the player swiped up, down, left, right
             switch swipeGesture.direction {
@@ -367,6 +420,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func checkDirection() {
+        
+        //Checks swipe gesture for the swipe feature
+        //Moves our hero according to the position
         if dir == .right {
             player.position.x += 5
         } else if dir == .left {
@@ -395,6 +451,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //print("other \(data)")
     }
     
+//    func updateBackGround() {
+//        
+//        //Loop through all the backgrounds
+//        //Scroll array
+//        groundScrollLayer.position.x -= scrollSpd * CGFloat(fixedDelta)
+//        
+//        //Loopin the ground
+//        for ground in groundScrollLayer.children as! [SKSpriteNode] {
+//            
+//            //Convert the object position to self GameScene so we can access it
+//            let groundPosition = ground.convert(ground.position, to: self)
+//            
+//            if groundPosition.x <= -groundPosition.x / 2 {
+//                ground.removeFromParent()
+//            }
+//            
+//            //Checks if we need to reposition the object
+//            if groundPosition.x <= 284 && groundScrollLayer.children.count <= 2{
+//                
+//                //Set reference of the new obstacle
+//                let newGround = groundSource.copy() as! SKSpriteNode
+//                groundScrollLayer.addChild(newGround)
+//                
+//            }
+//        }
+//    }
+    
     func updateAnimals() {
         
         //Loop through all the animals in the scene
@@ -409,8 +492,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 continue
             }
             
+            //Scrolls the animal or gives makes it move
             let position = creatureLayer.convert(animal.position, to: self)
             
+            //Check position
             if position.x >= (self.scene?.size.width)! / 2 {
                 //if the animal is moving back 
                 animal.position.x -= scrollSpd * CGFloat(fixedDelta)
@@ -425,8 +510,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Add a new animal
         if animalSpawnTimer > randAnimalSpawnTimer {
             
+            //Creates the new animal
             let newAnimal = creatureSource.copy() as! Animals
             creatureLayer.addChild(newAnimal)
+            
+            //Adding a new position TODO: Add random position
             let newPosition = creatureSource.position
             newAnimal.position = self.convert(newPosition, to: creatureLayer)
             newAnimal.gameScene = self
@@ -498,7 +586,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             spawnTimer = 0
             
             //Get a new rand timer
-            randObstacleSpawnTimer = CFTimeInterval(arc4random_uniform(UInt32(3.5)) + UInt32(2.5))
+            randObstacleSpawnTimer = CFTimeInterval(arc4random_uniform(UInt32(1.5)) + UInt32(1.5))
         }
     }
     

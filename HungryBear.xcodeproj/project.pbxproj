@@ -19,6 +19,8 @@
 		B3209CAD1F141A6E006DA8EA /* Animals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3209CAC1F141A6E006DA8EA /* Animals.swift */; };
 		B39F49651F1810BB00D95ED6 /* bottom-background.png in Resources */ = {isa = PBXBuildFile; fileRef = B39F49641F1810BB00D95ED6 /* bottom-background.png */; };
 		B39F49671F1811EB00D95ED6 /* background2.png in Resources */ = {isa = PBXBuildFile; fileRef = B39F49661F1811EB00D95ED6 /* background2.png */; };
+		B39F49691F18397400D95ED6 /* animals.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B39F49681F18397400D95ED6 /* animals.atlas */; };
+		B39F496B1F183E3400D95ED6 /* extend.png in Resources */ = {isa = PBXBuildFile; fileRef = B39F496A1F183E3400D95ED6 /* extend.png */; };
 		B3D5112D1F1696DE00653C3B /* color-large.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510951F1696DE00653C3B /* color-large.png */; };
 		B3D5112E1F1696DE00653C3B /* color-small.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510961F1696DE00653C3B /* color-small.png */; };
 		B3D5112F1F1696DE00653C3B /* dead-pine.png in Resources */ = {isa = PBXBuildFile; fileRef = B3D510971F1696DE00653C3B /* dead-pine.png */; };
@@ -224,6 +226,8 @@
 		B3209CAC1F141A6E006DA8EA /* Animals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animals.swift; sourceTree = "<group>"; };
 		B39F49641F1810BB00D95ED6 /* bottom-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottom-background.png"; sourceTree = "<group>"; };
 		B39F49661F1811EB00D95ED6 /* background2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background2.png; sourceTree = "<group>"; };
+		B39F49681F18397400D95ED6 /* animals.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = animals.atlas; sourceTree = "<group>"; };
+		B39F496A1F183E3400D95ED6 /* extend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = extend.png; sourceTree = "<group>"; };
 		B3D510951F1696DE00653C3B /* color-large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "color-large.png"; sourceTree = "<group>"; };
 		B3D510961F1696DE00653C3B /* color-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "color-small.png"; sourceTree = "<group>"; };
 		B3D510971F1696DE00653C3B /* dead-pine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dead-pine.png"; sourceTree = "<group>"; };
@@ -454,6 +458,7 @@
 				B3209C9C1F13E23B006DA8EA /* Main.storyboard */,
 				B3209C9F1F13E23B006DA8EA /* Assets.xcassets */,
 				B3D510941F1696DE00653C3B /* assets.atlas */,
+				B39F49681F18397400D95ED6 /* animals.atlas */,
 				B3209CA11F13E23B006DA8EA /* LaunchScreen.storyboard */,
 				B3209CA41F13E23B006DA8EA /* Info.plist */,
 				B3D511C51F1697E700653C3B /* Wolf.sks */,
@@ -468,6 +473,7 @@
 		B3D510941F1696DE00653C3B /* assets.atlas */ = {
 			isa = PBXGroup;
 			children = (
+				B39F496A1F183E3400D95ED6 /* extend.png */,
 				B3D512291F17F0FD00653C3B /* background.png */,
 				B39F49661F1811EB00D95ED6 /* background2.png */,
 				B39F49641F1810BB00D95ED6 /* bottom-background.png */,
@@ -811,8 +817,10 @@
 				B3D5114F1F1696DE00653C3B /* death0031.png in Resources */,
 				B3D511431F1696DE00653C3B /* death0019.png in Resources */,
 				B3D511FA1F16DBBB00653C3B /* idle0016.png in Resources */,
+				B39F496B1F183E3400D95ED6 /* extend.png in Resources */,
 				B3D511461F1696DE00653C3B /* death0022.png in Resources */,
 				B3D511871F1696DE00653C3B /* run0003.png in Resources */,
+				B39F49691F18397400D95ED6 /* animals.atlas in Resources */,
 				B3D511791F1696DE00653C3B /* pine-tree-large-bright-green.png in Resources */,
 				B3D512081F16DBBB00653C3B /* idle0030.png in Resources */,
 				B3D511EE1F16DBBB00653C3B /* idle0004.png in Resources */,
