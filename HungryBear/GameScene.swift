@@ -48,13 +48,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var distanceFromCenterCount = 4
     var shakeTimer: CFTimeInterval = 0
     var animalMoveTimer: CFTimeInterval = 0
+    var multiplierSpd = -7.0
+    var shouldAutorotate: Bool = false
     
     //Connect UI objects
     var pointsLabel: SKLabelNode!
     var highscoreLabel: SKLabelNode!
     
     override func didMove(to view: SKView) {
-        //Start your scene here
+        //Setup your scene here
         
         physicsWorld.contactDelegate = self
         //Get reference to the UI objects
@@ -301,13 +303,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         
+        //Scroll the ground
+        scroller(spd: scrollSpd)
+        
         //The accelerometer
         updateAcellerometerData()
         
         //Check direction
         //checkDirection()
-        
-        scroller(spd: scrollSpd)
         
         //Updates the animals
         updateAnimals()
@@ -334,15 +337,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func scroller(spd: CGFloat) {
         
         //Scrolls the world
-        
+
         //Scroll the main ground
-        groundSource.position.x -= (spd ) * CGFloat(fixedDelta)
+        groundSource.position.x -= (spd) * CGFloat(fixedDelta)
         groundSource2.position.x -= (spd) * CGFloat(fixedDelta)
         
         //Scroll the bottom background
         bottomSource.position.x -= spd * CGFloat(fixedDelta)
         bottomSource2.position.x -= spd * CGFloat(fixedDelta)
-
+        
+        //Does a check for if its position is off then bring them back to touch each other
+        if groundSource.position.x > groundSource2.position.x + groundSource.size.width {
+            groundSource.position.x = groundSource2.position.x + groundSource.size.width
+        }
+        
+        //Does a check for if its position is off then bring them back to touch each other
+        if groundSource2.position.x > groundSource.position.x + groundSource.size.width {
+            groundSource2.position.x = groundSource.position.x + groundSource2.size.width
+        }
+        
         //Check the grounds
         if(groundSource.position.x < -groundSource.size.width)
         {
@@ -366,6 +379,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             bottomSource2.position = CGPoint(x: bottomSource2.position.x + bottomSource.size.width * 2, y: bottomSource2.position.y)
             
         }
+        
     }
     
     func distanceFromMonster() {
@@ -447,36 +461,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard let data = motionManager.accelerometerData else { return }
         
         //Applying movement according to the data
-        player.position = CGPoint(x: player.position.x, y: CGFloat(player.position.y) + CGFloat(-7 * data.acceleration.x))
+        player.position = CGPoint(x: player.position.x, y: CGFloat(player.position.y) + CGFloat(multiplierSpd * data.acceleration.x))
         //print("other \(data)")
     }
-    
-//    func updateBackGround() {
-//        
-//        //Loop through all the backgrounds
-//        //Scroll array
-//        groundScrollLayer.position.x -= scrollSpd * CGFloat(fixedDelta)
-//        
-//        //Loopin the ground
-//        for ground in groundScrollLayer.children as! [SKSpriteNode] {
-//            
-//            //Convert the object position to self GameScene so we can access it
-//            let groundPosition = ground.convert(ground.position, to: self)
-//            
-//            if groundPosition.x <= -groundPosition.x / 2 {
-//                ground.removeFromParent()
-//            }
-//            
-//            //Checks if we need to reposition the object
-//            if groundPosition.x <= 284 && groundScrollLayer.children.count <= 2{
-//                
-//                //Set reference of the new obstacle
-//                let newGround = groundSource.copy() as! SKSpriteNode
-//                groundScrollLayer.addChild(newGround)
-//                
-//            }
-//        }
-//    }
     
     func updateAnimals() {
         
@@ -484,7 +471,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for animal in creatureLayer.children as! [Animals] {
             
             //If the animal is moving on it's own let it be
-            if animal.state == .moving {
+            if animal.state != .still {
                 
                 //Animal is moving
                 animal.startMoving()
@@ -511,8 +498,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if animalSpawnTimer > randAnimalSpawnTimer {
             
             //Creates the new animal
-            let newAnimal = creatureSource.copy() as! Animals
+            let newAnimal = Animals()
             creatureLayer.addChild(newAnimal)
+            print("creature ayer = \(creatureLayer.children)")
             
             //Adding a new position TODO: Add random position
             let newPosition = creatureSource.position
@@ -554,10 +542,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if spawnTimer >= randObstacleSpawnTimer {
             
             //Set reference of the new obstacle
-            let newObstacle = obstacleSource.copy() as! Obstacle
-            newObstacle.texture = SKTexture(imageNamed: newObstacle.getTexture())
+            let newObstacle = Obstacle()
+            //newObstacle.texture = SKTexture(imageNamed: newObstacle.getTexture())
             newObstacle.resetEverything()
-            print("new obstacle texture \(newObstacle.texture)")
+            //print("new obstacle texture \(newObstacle.texture)")
             obstaclelayer.addChild(newObstacle)
             
             //Generate new random y position
@@ -570,10 +558,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if num > 25 {
                 
                 //Add second obstacle to bottom half
-                let secondObstacle = obstacleSource.copy() as! Obstacle
-                secondObstacle.texture = SKTexture(imageNamed: secondObstacle.getTexture())
+                let secondObstacle = Obstacle()
+                //secondObstacle.texture = SKTexture(imageNamed: secondObstacle.getTexture())
                 secondObstacle.resetEverything()
-                print("new obstacle texture \(secondObstacle.texture)")
+                print("new obstacle texture \(secondObstacle)")
                 obstaclelayer.addChild(secondObstacle)
             
                 //Generate the random y position

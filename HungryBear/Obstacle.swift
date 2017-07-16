@@ -11,12 +11,12 @@ import SpriteKit
 
 class Obstacle: SKSpriteNode {
     
+    //Type of tree
+    var type: String = ""
+    
     func getTexture() -> String {
-        
-        //String we are going to return
+        //Tree we are going to return
         var tree: String = ""
-        //Type of tree
-        var type: String = ""
         
         //Random values for trees
         var size: String = ""
@@ -102,21 +102,27 @@ class Obstacle: SKSpriteNode {
     }
     
     func resetEverything() {
-        //Accessing the old and in with the new
+        //If its a log give it the original properties
+        if self.type == "log" {
+            //Accessing the old and in with the new
+            let size = self.texture?.size()
+            self.anchorPoint = CGPoint(x: 0.5 ,y: 0.5)
+            let physics = SKPhysicsBody(texture: self.texture!, alphaThreshold: 0.9 , size: size!)
+            //Since we reset the hit box we have to reset the properties as well
+            physics.categoryBitMask = 1
+            physics.collisionBitMask = 0
+            physics.contactTestBitMask = 2
+            physics.friction = 0.2
+            physics.mass = 0.111111119389534
+            physics.affectedByGravity = false
+        
+            //Assigning the new properties
+            self.size = size!
+            self.physicsBody = physics
+        }
+        
+        //Else do the tree stuff
         let size = self.texture?.size()
-        
-        let physics = SKPhysicsBody(texture: self.texture!, alphaThreshold: 0.9 , size: size!)
-        //Since we reset the hit box we have to reset the properties as well
-        physics.categoryBitMask = 1
-        physics.collisionBitMask = 0
-        physics.contactTestBitMask = 2
-        physics.friction = 0.2
-        physics.mass = 0.111111119389534
-        physics.affectedByGravity = false
-        
-        //Assigning the new properties
-        self.size = size!
-        self.physicsBody = physics
         
         //Check the scale of the image and rescaling it
         let scaleSize = 100.0
@@ -141,25 +147,35 @@ class Obstacle: SKSpriteNode {
         }
 
     }
-    
-    init() {
-        
-        let texture = SKTexture(imageNamed: "")
-        let color = UIColor.clear
-        let size = texture.size()
-        
+
+    override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         super.init(texture: texture, color: color, size: size)
         
-        //Set the physical properties
-        physicsBody = SKPhysicsBody(texture: texture, alphaThreshold: 0.9, size: size)
-        physicsBody?.categoryBitMask = 1
-        physicsBody?.collisionBitMask = 0
-        physicsBody?.contactTestBitMask = 2
-        physicsBody?.friction = 0.2
-        physicsBody?.mass = 0.111111119389534
-        physicsBody?.affectedByGravity = false
+        //Gives the texture to the animal
+        let newTexture = SKTexture(imageNamed: getTexture())
+        
+        //Creating a new animal
+        //Position, name, size, physics, etc.
+        let position = CGPoint(x: 760, y: 160)
+        let name = "obstacle"
+        let size = newTexture.size()
+        let physics = SKPhysicsBody(rectangleOf: CGSize(width: newTexture.size().width / 1.2, height: newTexture.size().height / 2), center: CGPoint(x: 0, y: 0))
+        
+        physics.affectedByGravity = false
+        physics.contactTestBitMask = 2
+        physics.categoryBitMask = 1
+        physics.collisionBitMask = 0
+        
+        //Gives the new properties of the animal
+        self.zPosition = 10
+        self.anchorPoint = CGPoint(x: 0.6, y: 0.3)
+        self.texture = newTexture
+        self.position = position
+        self.name = name
+        self.size = size
+        self.physicsBody = physics
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         //fatalError("init(coder:) has not been implemented")
