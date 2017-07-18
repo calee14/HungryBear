@@ -49,7 +49,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var shakeTimer: CFTimeInterval = 0
     var animalMoveTimer: CFTimeInterval = 0
     var multiplierSpd = -7.0
-    var shouldAutorotate: Bool = false
+    var lock = false
+    var landscape = ""
     
     //Connect UI objects
     var pointsLabel: SKLabelNode!
@@ -67,9 +68,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Connect obstacleLayer
         obstaclelayer = self.childNode(withName: "obstacleLayer")
+        
         //Connect wolf
         wolf = self.childNode(withName: "//wolf") as! Monster
         wolf.monsterState = .walking
+        wolf.gameScene = self
         
         //Connect scrollLayer
         groundSource2 = self.childNode(withName: "groundSource2") as! SKSpriteNode
@@ -121,6 +124,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Set the score label to 0
         pointsLabel.text = "\(points)"
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -302,6 +306,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+        print("The lock is \(lock)")
+        if lock == false {
+            if UIDevice.current.orientation == UIDeviceOrientation.landscapeLeft {
+                print("landscape Left")
+                AppUtility.lockOrientation(.landscapeRight)
+                landscape = "right"
+                lock = true
+            } else if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
+                print("landScap Right")
+                AppUtility.lockOrientation(.landscapeLeft)
+                landscape = "left"
+                lock = true
+            } else {
+                print("There is no orientation")
+            }
+            
+        }
         
         //Scroll the ground
         scroller(spd: scrollSpd)
@@ -311,6 +332,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Check direction
         //checkDirection()
+        
+        //Update the monster
+        wolf.follow()
         
         //Updates the animals
         updateAnimals()
@@ -383,7 +407,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func distanceFromMonster() {
+        //Checks if we are going to be eaten by the monster
+        //If so run an animation and change the scene
         print("Counter: \(distanceFromCenterCount)")
+        
+        let attack = SKAction.run({
+            self.wolf.attack()
+        })
+        
         if distanceFromCenterCount <= 0 {
             
             guard let skView = self.view as SKView! else {
@@ -397,14 +428,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             //Enusre the aspect mode is correct
             scene.scaleMode = .aspectFit
+            scene.lock = true
+            scene.multiplierSpd = self.multiplierSpd
             //Show Debug
             skView.showsPhysics = true
             skView.showsDrawCount = true
             skView.showsFPS = true
             
+            
             //4)
-            let transition = SKTransition.moveIn(with: .right, duration: 1)
-            skView.presentScene(scene, transition: transition)
+            let changeScene = SKAction.run({
+                let transition = SKTransition.moveIn(with: .right, duration: 1)
+                skView.presentScene(scene, transition: transition)
+            })
+            let wait = SKAction.wait(forDuration: 1)
+            let seq = SKAction.sequence([attack, wait, changeScene])
+            run(seq)
         }
     }
     
@@ -458,8 +497,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //TODO: Check the data
         //print("turbines to speed")
+        let dir: String = landscape
         guard let data = motionManager.accelerometerData else { return }
         
+        if dir == "left" {
+           multiplierSpd = -7
+        } else if dir == "right" {
+            multiplierSpd = 7
+        }
         //Applying movement according to the data
         player.position = CGPoint(x: player.position.x, y: CGFloat(player.position.y) + CGFloat(multiplierSpd * data.acceleration.x))
         //print("other \(data)")
@@ -541,30 +586,43 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Add new obstacles
         if spawnTimer >= randObstacleSpawnTimer {
             
-            //Set reference of the new obstacle
-            let newObstacle = Obstacle()
-            //newObstacle.texture = SKTexture(imageNamed: newObstacle.getTexture())
-            newObstacle.resetEverything()
-            //print("new obstacle texture \(newObstacle.texture)")
-            obstaclelayer.addChild(newObstacle)
+            //If num is less than 25 only add one obstacel
+            if num < 25 {
+                //Set reference of the only one obstacle
+                let newObstacle = Obstacle()
+                //newObstacle.texture = SKTexture(imageNamed: newObstacle.getTexture())
+                newObstacle.resetEverything()
+                //print("new obstacle texture \(newObstacle.texture)")
+                obstaclelayer.addChild(newObstacle)
             
-            //Generate new random y position
-            let randomPosition = CGPoint(x: obstacleSource.position.x, y: CGFloat.random(min: 180, max: 295))
+                //Generate new random y position that can be anywhere on the map
+                let randomPosition = CGPoint(x: obstacleSource.position.x, y: CGFloat.random(min: 25, max: 295))
             
-            //Converts new obstacles position to the new position to the obstacle layer
-            newObstacle.position = self.convert(randomPosition, to: obstaclelayer)
-            
-            //if num is greater than 25 we can add a second obstacle
-            if num > 25 {
+                //Converts new obstacles position to the new position to the obstacle layer
+                newObstacle.position = self.convert(randomPosition, to: obstaclelayer)
+                
+            } else if num < 50 {
+                //if num is less than 50 more than 25 we can add two obstacle
+                
+                //Set reference to the first obstacle
+                let newObstacle = Obstacle()
+                newObstacle.resetEverything()
+                //print("new obstacle texture \(newObstacle.texture)")
+                obstaclelayer.addChild(newObstacle)
+                
+                //Generate new random y position on top half of the screen
+                let randomPosition = CGPoint(x: obstacleSource.position.x, y: CGFloat.random(min: 180, max: 295))
+                
+                //Converts new obstacles position to the new position to the obstacle layer
+                newObstacle.position = self.convert(randomPosition, to: obstaclelayer)
                 
                 //Add second obstacle to bottom half
                 let secondObstacle = Obstacle()
-                //secondObstacle.texture = SKTexture(imageNamed: secondObstacle.getTexture())
                 secondObstacle.resetEverything()
                 print("new obstacle texture \(secondObstacle)")
                 obstaclelayer.addChild(secondObstacle)
             
-                //Generate the random y position
+                //Generate the random y position for the bottom half of the screen
                 let secondRandomPosition = CGPoint(x: obstacleSource.position.x , y: CGFloat.random(min: 25, max: 130))
             
                 //Conver the new postion to the new obstacle

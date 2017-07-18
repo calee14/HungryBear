@@ -8,6 +8,7 @@
 
 import Foundation
 import SpriteKit
+import AVFoundation
 
 enum AnimalState {
     case still, moving, idle
@@ -20,6 +21,7 @@ enum Vertical {
 class Animals: SKSpriteNode {
     
     var state: AnimalState = .still
+    var sound: String = ""
     
     //Getting the variables stats for our animal
     var dir: Vertical!
@@ -140,42 +142,55 @@ class Animals: SKSpriteNode {
         if rand < 7 {
             //7% chance
             species = "chicken"
+            sound = "chicken"
         } else if rand < 14 {
             //7% chance
             species = "chipmunk"
+            sound = "chick"
         } else if rand < 21 {
             //7% chance
             species = "cow"
+            sound = "cow"
         } else if rand < 28 {
             //7% chance
             species = "cow-brown"
+            sound = "cow"
         } else if rand < 35 {
             //7% chance
             species = "deer"
+            sound = "chick"
         } else if rand < 42 {
             //7% chance
             species = "elk"
+            sound = "chick"
         } else if rand < 49 {
             //7% chance
             species = "goat"
+            sound = "goat"
         } else if rand < 56 {
             //7% chance
             species = "pig"
+            sound = "pig"
         } else if rand < 63 {
             //7% chance
             species = "prairie-dog"
+            sound = "chick"
         } else if rand < 70 {
             //7% chance
             species = "rabbit-brown"
+            sound = "chick"
         } else if rand < 77 {
             //7% chance
             species = "rabbit-white"
+            sound = "chick"
         } else if rand < 84 {
             //7% chance
             species = "sheep"
+            sound = "sheep"
         } else if rand < 100 {
             //16% chance
             species = "cat"
+            sound = "cat"
         }
         print("Animal \(species)")
         checkScaling(imageText: "\(species!)-1")
@@ -211,6 +226,7 @@ class Animals: SKSpriteNode {
     }
     
     func deathAnimation() {
+        
         //Creating a new node to run the animation
         let newNode = SKSpriteNode(texture: nil, color: UIColor.clear, size: CGSize(width: 25,height: 25))
         newNode.position.x = 0
@@ -221,10 +237,57 @@ class Animals: SKSpriteNode {
         gameScene.addChild(newNode)
         
         //The animation the new node will run
+        
+        //Sound effects
+        //Animal Cry
+        var animalCry: AVAudioPlayer?
+        
+        //Try and catching the animal cry
+        do {
+            let cryURL = URL.init(fileURLWithPath: Bundle.main.path(forResource: "\(sound)-cry", ofType: "mp3")!)
+            animalCry = try AVAudioPlayer(contentsOf: cryURL)
+            animalCry!.prepareToPlay()
+            
+        } catch {
+            print(error)
+        }
+        
+        //Cry
+        let cry = SKAction.run({
+            animalCry?.volume = 0.7
+            animalCry!.play()
+        })
+        
+        //Monster Crunch
+        var monsterCrunch: AVAudioPlayer?
+        
+        //Try and catch athe animal cry
+        do {
+            let crunchURL = URL.init(fileURLWithPath: Bundle.main.path(forResource: "monster-crunch", ofType: "mp3")!)
+            monsterCrunch = try AVAudioPlayer(contentsOf: crunchURL)
+            monsterCrunch!.prepareToPlay()
+        } catch {
+            print(error)
+        }
+        
+        //Crunch action
+        let crunch = SKAction.run({
+            monsterCrunch?.volume = 1.0
+            monsterCrunch?.play()
+        })
+        
+        //Run the eat animation and remove the node
         let eat = SKAction.init(named: "Eat")
         let removeAnimal = SKAction.run({
-            self.removeFromParent()
+            let wait = SKAction.wait(forDuration: 0.1)
+            let removeTheAnimal = SKAction.run({
+                self.removeFromParent()
+            })
+            let seq = SKAction.sequence([wait , cry , crunch, removeTheAnimal])
+            newNode.run(seq)
         })
+        
+        //Remove the new wolf node
         let removeNode = SKAction.run({
             let wait = SKAction.wait(forDuration: 0.66)
             let deleteNode = SKAction.run ({
@@ -233,6 +296,7 @@ class Animals: SKSpriteNode {
             let seq = SKAction.sequence([wait, deleteNode])
             newNode.run(seq)
         })
+        //
         let seq = SKAction.sequence([removeAnimal, eat!, removeNode])
         newNode.run(seq)
     }

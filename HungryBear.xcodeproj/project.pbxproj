@@ -7,6 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B31DD6B51F1D5D1C00BF7C0B /* BackgroundMix.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B31DD6AA1F1D5D1C00BF7C0B /* BackgroundMix.mp3 */; };
+		B31DD6B61F1D5D1C00BF7C0B /* cat-cry.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B31DD6AB1F1D5D1C00BF7C0B /* cat-cry.mp3 */; };
+		B31DD6B71F1D5D1C00BF7C0B /* chick-cry.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B31DD6AC1F1D5D1C00BF7C0B /* chick-cry.mp3 */; };
+		B31DD6B81F1D5D1C00BF7C0B /* chicken-cry.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B31DD6AD1F1D5D1C00BF7C0B /* chicken-cry.mp3 */; };
+		B31DD6B91F1D5D1C00BF7C0B /* goat-cry.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B31DD6AE1F1D5D1C00BF7C0B /* goat-cry.mp3 */; };
+		B31DD6BA1F1D5D1C00BF7C0B /* monster-growl1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B31DD6AF1F1D5D1C00BF7C0B /* monster-growl1.mp3 */; };
+		B31DD6BB1F1D5D1C00BF7C0B /* monster-growl2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B31DD6B01F1D5D1C00BF7C0B /* monster-growl2.mp3 */; };
+		B31DD6BC1F1D5D1C00BF7C0B /* sheep-cry.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B31DD6B11F1D5D1C00BF7C0B /* sheep-cry.mp3 */; };
+		B31DD6BD1F1D5D1C00BF7C0B /* monster-crunch.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B31DD6B21F1D5D1C00BF7C0B /* monster-crunch.mp3 */; };
+		B31DD6BE1F1D5D1C00BF7C0B /* Tree Crash.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B31DD6B31F1D5D1C00BF7C0B /* Tree Crash.mp3 */; };
+		B31DD6BF1F1D5D1C00BF7C0B /* Walk-On-Grass.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B31DD6B41F1D5D1C00BF7C0B /* Walk-On-Grass.mp3 */; };
+		B31DD6C11F1D5E2F00BF7C0B /* pig-cry.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B31DD6C01F1D5E2F00BF7C0B /* pig-cry.mp3 */; };
+		B31DD6C31F1D5F3E00BF7C0B /* cow-cry.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B31DD6C21F1D5F3E00BF7C0B /* cow-cry.mp3 */; };
+		B31DD6C51F1D80EE00BF7C0B /* AppUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31DD6C41F1D80EE00BF7C0B /* AppUtility.swift */; };
 		B3209C931F13E23B006DA8EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3209C921F13E23B006DA8EA /* AppDelegate.swift */; };
 		B3209C951F13E23B006DA8EA /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B3209C941F13E23B006DA8EA /* GameScene.sks */; };
 		B3209C971F13E23B006DA8EA /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B3209C961F13E23B006DA8EA /* Actions.sks */; };
@@ -212,6 +226,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B31DD6AA1F1D5D1C00BF7C0B /* BackgroundMix.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BackgroundMix.mp3; sourceTree = "<group>"; };
+		B31DD6AB1F1D5D1C00BF7C0B /* cat-cry.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "cat-cry.mp3"; sourceTree = "<group>"; };
+		B31DD6AC1F1D5D1C00BF7C0B /* chick-cry.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "chick-cry.mp3"; sourceTree = "<group>"; };
+		B31DD6AD1F1D5D1C00BF7C0B /* chicken-cry.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "chicken-cry.mp3"; sourceTree = "<group>"; };
+		B31DD6AE1F1D5D1C00BF7C0B /* goat-cry.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "goat-cry.mp3"; sourceTree = "<group>"; };
+		B31DD6AF1F1D5D1C00BF7C0B /* monster-growl1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "monster-growl1.mp3"; sourceTree = "<group>"; };
+		B31DD6B01F1D5D1C00BF7C0B /* monster-growl2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "monster-growl2.mp3"; sourceTree = "<group>"; };
+		B31DD6B11F1D5D1C00BF7C0B /* sheep-cry.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "sheep-cry.mp3"; sourceTree = "<group>"; };
+		B31DD6B21F1D5D1C00BF7C0B /* monster-crunch.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "monster-crunch.mp3"; sourceTree = "<group>"; };
+		B31DD6B31F1D5D1C00BF7C0B /* Tree Crash.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Tree Crash.mp3"; sourceTree = "<group>"; };
+		B31DD6B41F1D5D1C00BF7C0B /* Walk-On-Grass.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Walk-On-Grass.mp3"; sourceTree = "<group>"; };
+		B31DD6C01F1D5E2F00BF7C0B /* pig-cry.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "pig-cry.mp3"; sourceTree = "<group>"; };
+		B31DD6C21F1D5F3E00BF7C0B /* cow-cry.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "cow-cry.mp3"; sourceTree = "<group>"; };
+		B31DD6C41F1D80EE00BF7C0B /* AppUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUtility.swift; sourceTree = "<group>"; };
 		B3209C8F1F13E23B006DA8EA /* HungryBear.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HungryBear.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3209C921F13E23B006DA8EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B3209C941F13E23B006DA8EA /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -429,6 +457,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B31DD6A91F1D5D1C00BF7C0B /* SFX-atlas */ = {
+			isa = PBXGroup;
+			children = (
+				B31DD6AB1F1D5D1C00BF7C0B /* cat-cry.mp3 */,
+				B31DD6AA1F1D5D1C00BF7C0B /* BackgroundMix.mp3 */,
+				B31DD6AC1F1D5D1C00BF7C0B /* chick-cry.mp3 */,
+				B31DD6AD1F1D5D1C00BF7C0B /* chicken-cry.mp3 */,
+				B31DD6AE1F1D5D1C00BF7C0B /* goat-cry.mp3 */,
+				B31DD6AF1F1D5D1C00BF7C0B /* monster-growl1.mp3 */,
+				B31DD6B01F1D5D1C00BF7C0B /* monster-growl2.mp3 */,
+				B31DD6B11F1D5D1C00BF7C0B /* sheep-cry.mp3 */,
+				B31DD6B21F1D5D1C00BF7C0B /* monster-crunch.mp3 */,
+				B31DD6B31F1D5D1C00BF7C0B /* Tree Crash.mp3 */,
+				B31DD6B41F1D5D1C00BF7C0B /* Walk-On-Grass.mp3 */,
+				B31DD6C01F1D5E2F00BF7C0B /* pig-cry.mp3 */,
+				B31DD6C21F1D5F3E00BF7C0B /* cow-cry.mp3 */,
+			);
+			name = "SFX-atlas";
+			path = "animals.atlas/SFX-atlas";
+			sourceTree = "<group>";
+		};
 		B3209C861F13E23B006DA8EA = {
 			isa = PBXGroup;
 			children = (
@@ -459,6 +508,7 @@
 				B3209C9F1F13E23B006DA8EA /* Assets.xcassets */,
 				B3D510941F1696DE00653C3B /* assets.atlas */,
 				B39F49681F18397400D95ED6 /* animals.atlas */,
+				B31DD6A91F1D5D1C00BF7C0B /* SFX-atlas */,
 				B3209CA11F13E23B006DA8EA /* LaunchScreen.storyboard */,
 				B3209CA41F13E23B006DA8EA /* Info.plist */,
 				B3D511C51F1697E700653C3B /* Wolf.sks */,
@@ -466,6 +516,7 @@
 				B3D511C91F169F8000653C3B /* Obstacle.swift */,
 				B3D511CB1F16DB4C00653C3B /* Runner.sks */,
 				B3D512091F16DD2800653C3B /* Player.swift */,
+				B31DD6C41F1D80EE00BF7C0B /* AppUtility.swift */,
 			);
 			path = HungryBear;
 			sourceTree = "<group>";
@@ -727,16 +778,19 @@
 				B3D511A91F1696DE00653C3B /* wolfATTACKright (5).png in Resources */,
 				B3D5118C1F1696DE00653C3B /* run0008.png in Resources */,
 				B3D5114C1F1696DE00653C3B /* death0028.png in Resources */,
+				B31DD6BB1F1D5D1C00BF7C0B /* monster-growl2.mp3 in Resources */,
 				B3D5115F1F1696DE00653C3B /* death0047.png in Resources */,
 				B3D5120E1F1702CB00653C3B /* log-1-light-brown-left.png in Resources */,
 				B3209C9E1F13E23B006DA8EA /* Main.storyboard in Resources */,
 				B3D512221F17DA2E00653C3B /* log-2-red-left.png in Resources */,
+				B31DD6BD1F1D5D1C00BF7C0B /* monster-crunch.mp3 in Resources */,
 				B3D5117D1F1696DE00653C3B /* pine-tree-medium-bright-green.png in Resources */,
 				B3D5118D1F1696DE00653C3B /* run0009.png in Resources */,
 				B3D511BC1F1696DE00653C3B /* wolfWALKright (12).png in Resources */,
 				B3D511F71F16DBBB00653C3B /* idle0013.png in Resources */,
 				B3D511571F1696DE00653C3B /* death0039.png in Resources */,
 				B3D512181F17D7C600653C3B /* log-1-red-right.png in Resources */,
+				B31DD6C31F1D5F3E00BF7C0B /* cow-cry.mp3 in Resources */,
 				B3D511991F1696DE00653C3B /* stump-4.png in Resources */,
 				B3D511B61F1696DE00653C3B /* wolfIMPACTeffect (7).png in Resources */,
 				B3D5118E1F1696DE00653C3B /* run0010.png in Resources */,
@@ -751,6 +805,7 @@
 				B3D511C01F1696DE00653C3B /* wolfWALKright (5).png in Resources */,
 				B3D511631F1696DE00653C3B /* fallen-pine-bright-green.png in Resources */,
 				B3D511861F1696DE00653C3B /* run0002.png in Resources */,
+				B31DD6BF1F1D5D1C00BF7C0B /* Walk-On-Grass.mp3 in Resources */,
 				B3D511421F1696DE00653C3B /* death0018.png in Resources */,
 				B3D511A81F1696DE00653C3B /* wolfATTACKright (4).png in Resources */,
 				B3D5117C1F1696DE00653C3B /* pine-tree-large-light-green.png in Resources */,
@@ -773,6 +828,7 @@
 				B3D511561F1696DE00653C3B /* death0038.png in Resources */,
 				B3D511FC1F16DBBB00653C3B /* idle0018.png in Resources */,
 				B3D511481F1696DE00653C3B /* death0024.png in Resources */,
+				B31DD6B91F1D5D1C00BF7C0B /* goat-cry.mp3 in Resources */,
 				B3D511ED1F16DBBB00653C3B /* idle0003.png in Resources */,
 				B3D511321F1696DE00653C3B /* death0002.png in Resources */,
 				B3D511A11F1696DE00653C3B /* wolfATTACKright (11).png in Resources */,
@@ -789,13 +845,16 @@
 				B3D511B01F1696DE00653C3B /* wolfIMPACTeffect (11).png in Resources */,
 				B3D511B91F1696DE00653C3B /* wolfWALKright (1).png in Resources */,
 				B3D511F01F16DBBB00653C3B /* idle0006.png in Resources */,
+				B31DD6BC1F1D5D1C00BF7C0B /* sheep-cry.mp3 in Resources */,
 				B3D511851F1696DE00653C3B /* run0001.png in Resources */,
 				B3D511911F1696DE00653C3B /* run0013.png in Resources */,
+				B31DD6B71F1D5D1C00BF7C0B /* chick-cry.mp3 in Resources */,
 				B3D511331F1696DE00653C3B /* death0003.png in Resources */,
 				B3D5114A1F1696DE00653C3B /* death0026.png in Resources */,
 				B3D5122A1F17F0FD00653C3B /* background.png in Resources */,
 				B3D5118F1F1696DE00653C3B /* run0011.png in Resources */,
 				B3D511891F1696DE00653C3B /* run0005.png in Resources */,
+				B31DD6BE1F1D5D1C00BF7C0B /* Tree Crash.mp3 in Resources */,
 				B3D5115E1F1696DE00653C3B /* death0046.png in Resources */,
 				B3D5117A1F1696DE00653C3B /* pine-tree-large-dark-green.png in Resources */,
 				B3D5116A1F1696DE00653C3B /* grass-shadow-5.png in Resources */,
@@ -824,6 +883,7 @@
 				B3D511791F1696DE00653C3B /* pine-tree-large-bright-green.png in Resources */,
 				B3D512081F16DBBB00653C3B /* idle0030.png in Resources */,
 				B3D511EE1F16DBBB00653C3B /* idle0004.png in Resources */,
+				B31DD6B81F1D5D1C00BF7C0B /* chicken-cry.mp3 in Resources */,
 				B3D5117E1F1696DE00653C3B /* pine-tree-medium-dark-green.png in Resources */,
 				B3D511611F1696DE00653C3B /* death0049.png in Resources */,
 				B3D5114E1F1696DE00653C3B /* death0030.png in Resources */,
@@ -858,6 +918,7 @@
 				B3D5121A1F17D87F00653C3B /* log-2-dark-left.png in Resources */,
 				B3D512241F17DA3600653C3B /* log-2-red-right.png in Resources */,
 				B3D511361F1696DE00653C3B /* death0006.png in Resources */,
+				B31DD6BA1F1D5D1C00BF7C0B /* monster-growl1.mp3 in Resources */,
 				B3D5119F1F1696DE00653C3B /* wolfATTACKright (1).png in Resources */,
 				B3D512101F17D54100653C3B /* log-1-light-brown-right.png in Resources */,
 				B3D511411F1696DE00653C3B /* death0017.png in Resources */,
@@ -875,6 +936,7 @@
 				B3D512071F16DBBB00653C3B /* idle0029.png in Resources */,
 				B3209C971F13E23B006DA8EA /* Actions.sks in Resources */,
 				B39F49671F1811EB00D95ED6 /* background2.png in Resources */,
+				B31DD6B61F1D5D1C00BF7C0B /* cat-cry.mp3 in Resources */,
 				B3D5112D1F1696DE00653C3B /* color-large.png in Resources */,
 				B3D5119A1F1696DE00653C3B /* stump-5.png in Resources */,
 				B3D511B41F1696DE00653C3B /* wolfIMPACTeffect (5).png in Resources */,
@@ -894,6 +956,7 @@
 				B3D511691F1696DE00653C3B /* grass-shadow-4.png in Resources */,
 				B3D5113F1F1696DE00653C3B /* death0015.png in Resources */,
 				B3D511C61F1697E700653C3B /* Wolf.sks in Resources */,
+				B31DD6C11F1D5E2F00BF7C0B /* pig-cry.mp3 in Resources */,
 				B3D5112F1F1696DE00653C3B /* dead-pine.png in Resources */,
 				B3D511BF1F1696DE00653C3B /* wolfWALKright (4).png in Resources */,
 				B3D512041F16DBBB00653C3B /* idle0026.png in Resources */,
@@ -906,6 +969,7 @@
 				B3D5113E1F1696DE00653C3B /* death0014.png in Resources */,
 				B3D511EF1F16DBBB00653C3B /* idle0005.png in Resources */,
 				B3D511821F1696DE00653C3B /* pine-tree-small-dark-green.png in Resources */,
+				B31DD6B51F1D5D1C00BF7C0B /* BackgroundMix.mp3 in Resources */,
 				B3D511811F1696DE00653C3B /* pine-tree-small-bright-green.png in Resources */,
 				B3D512021F16DBBB00653C3B /* idle0024.png in Resources */,
 				B3D511A61F1696DE00653C3B /* wolfATTACKright (2).png in Resources */,
@@ -930,6 +994,7 @@
 			files = (
 				B3D511CA1F169F8000653C3B /* Obstacle.swift in Sources */,
 				B3209CAD1F141A6E006DA8EA /* Animals.swift in Sources */,
+				B31DD6C51F1D80EE00BF7C0B /* AppUtility.swift in Sources */,
 				B3209C991F13E23B006DA8EA /* GameScene.swift in Sources */,
 				B3209C9B1F13E23B006DA8EA /* GameViewController.swift in Sources */,
 				B3D5120A1F16DD2800653C3B /* Player.swift in Sources */,

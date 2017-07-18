@@ -73,23 +73,23 @@ class Obstacle: SKSpriteNode {
         if type == "log" {
             
             //Type
-            if randNum < 0 {
+            if randNum < 25 {
                 num = "-1"
             } else if randNum < 50 {
                 num = "-2"
             }
             
             //Color
-            if randColor < 0 {
+            if randColor < 16 {
                 color = "-dark"
-            } else if randColor < 0 {
+            } else if randColor < 32 {
                 color = "-light-brown"
             } else if randColor < 50 {
                 color = "-red"
             }
             
             //Side
-            if randSide < 0  {
+            if randSide < 25  {
                 side = "-right"
             } else if randSide < 50 {
                 side = "-left"
