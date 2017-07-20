@@ -60,7 +60,7 @@ class Monster: SKSpriteNode {
         self.removeAction(forKey: actionKey)
         //Get the animation
         let animationAttack = SKAction.init(named: "Eat")
-        
+        let moveToPlayer = SKAction.move(to: CGPoint(x: self.position.x, y: gameScene.player.position.y), duration: 0.1)
         //Sound
         //Monster Crunch
         var monsterCrunch: AVAudioPlayer?
@@ -76,11 +76,10 @@ class Monster: SKSpriteNode {
         
         //Crunch action
         let crunch = SKAction.run({
-            monsterCrunch?.volume = 1.0
             monsterCrunch?.play()
         })
         
-        let seq = SKAction.sequence([animationAttack!, crunch])
+        let seq = SKAction.sequence([moveToPlayer, crunch, animationAttack!])
         self.run(seq)
         
     }

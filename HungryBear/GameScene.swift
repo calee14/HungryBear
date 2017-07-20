@@ -34,11 +34,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var groundSource2: SKSpriteNode!
     var bottomSource: SKSpriteNode!
     var bottomSource2: SKSpriteNode!
+    var foodLayer: SKNode!
+    var foodSource: SKNode!
+    var powerBar: PowerBar!
+    var powerButton: MSButtonNode!
     
     //Initialize variables
     var spawnTimer: CFTimeInterval = 0
     var secondSpawnTimer: CFTimeInterval = 0
     var animalSpawnTimer: CFTimeInterval = 0
+    var foodSpawnTimer: CFTimeInterval = 0
+    var randFoodSpawnTimer: CFTimeInterval = 10
     var randObstacleSpawnTimer: CFTimeInterval = 1
     var randAnimalSpawnTimer: CFTimeInterval = 5
     var scrollSpd: CGFloat = 200
@@ -46,11 +52,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var points = 0
     var highscore = 0
     var distanceFromCenterCount = 4
+    var distanceCounter = 40
     var shakeTimer: CFTimeInterval = 0
     var animalMoveTimer: CFTimeInterval = 0
     var multiplierSpd = -7.0
     var lock = false
     var landscape = ""
+    
+    var toBeDeleted = [SKSpriteNode]()
     
     //Connect UI objects
     var pointsLabel: SKLabelNode!
@@ -64,7 +73,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Connect player
         player = self.childNode(withName: "//player") as! Player
-        player.running()
+        player.playerState = .running
+        
+        //Connect the power bar feature
+        powerBar = self.childNode(withName: "powerBar") as! PowerBar
+        powerBar.connectBars()
+        
+        powerButton = self.childNode(withName: "powerButton") as! MSButtonNode
+        
+        powerButton.selectedHandler = {
+            
+            //If the player is dead or no powerups the power ups don't have any effect
+            if self.powerBar.numOfBars != 0 && self.player.playerState != .death {
+                self.boostsThePlayer()
+            }
+        }
         
         //Connect obstacleLayer
         obstaclelayer = self.childNode(withName: "obstacleLayer")
@@ -73,6 +96,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         wolf = self.childNode(withName: "//wolf") as! Monster
         wolf.monsterState = .walking
         wolf.gameScene = self
+        
+        //Connect the food spawners
+        foodLayer = self.childNode(withName: "foodLayer")
+        foodSource = self.childNode(withName: "food")
         
         //Connect scrollLayer
         groundSource2 = self.childNode(withName: "groundSource2") as! SKSpriteNode
@@ -124,6 +151,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Set the score label to 0
         pointsLabel.text = "\(points)"
+        
+        //Start the background music
+        let backgroundSound = SKAudioNode.init(fileNamed: "BackgroundMix3")
+        let adjustVolume = SKAction.changeVolume(to: 1.0, duration: 0.0)
+        let playAudio = SKAction.play()
+        backgroundSound.name = "background"
+        print("the au\(backgroundSound)")
+        backgroundSound.autoplayLooped = true
+        
+        //Add it to the scene and play it
+        self.addChild(backgroundSound)
+        backgroundSound.run(adjustVolume)
+        backgroundSound.run(playAudio)
         
     }
     
@@ -213,6 +253,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //            return
 //        }
 //        
+        
         //If any object with physics body collides with the frame boundaries
         if nodeA.name == nil {
             //nodeB.removeAllActions()
@@ -223,10 +264,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         //If player collides with the obstacle
-        if nodeA.name == "player" && nodeB.name == "obstacle" || nodeB.name == "player" && nodeA.name == "obstacle"{
+        if nodeA.name == "player" && nodeB.name == "obstacle" || nodeB.name == "player" && nodeA.name == "obstacle" && player.playerState == .running {
+            print("It says player state is not ability it is \(player.playerState)")
+            if player.playerState == .ability { print("It says: player state says \(player.playerState)") }
             
             //Timer for running collision actions
-            if shakeTimer > 0.7 {
+            if shakeTimer > 0.7 && player.playerState != .ability{
                 //Runs the shake scene to give the player something to see
                 let shakeScene = SKAction.run({
                 let shake = SKAction.init(named: "ShakeItUp")
@@ -234,16 +277,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     node.run(shake!)
                     }
                 })
-            
+                
                 self.player.run(shakeScene)
             
+                //Play the sound
+                //Booom
+                //Start the background music
+                let boomSound = SKAudioNode.init(fileNamed: "tree-crash")
+                let adjustVolume = SKAction.changeVolume(to: 0.6, duration: 0.0)
+                let playAudio = SKAction.play()
+                print("the au\(boomSound)")
+                boomSound.autoplayLooped = false
+                
+                //Add it to the scene and play it
+                self.addChild(boomSound)
+                boomSound.run(adjustVolume)
+                boomSound.run(playAudio)
+                
+                
                 ///
                 print("this is nodeB: \(nodeB)")
                 //Moves the player back
-                let move = SKAction.move(to: CGPoint(x: player.position.x - 50, y: player.position.y), duration: 1)
+                let move = SKAction.move(to: CGPoint(x: player.position.x - CGFloat(distanceCounter), y: player.position.y), duration: 1)
                 let seq = SKAction.sequence([move])
                 player.run(seq)
-                //nodeB.removeFromParent()
             
                 //Updates the count of the counters to death
                 distanceFromCenterCount -= 1
@@ -253,7 +310,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 shakeTimer = 0
             }
             
-        }// else if nodeA.name == "player" && nodeB.name == "obstacle" {
+        }
+        
+        if nodeA.name == "player" && nodeB.name == "food" || nodeA.name == "food" && nodeB.name == "player" {
+            //Run code for if the player collided with the food
+            
+            //Give the power bar a bar
+            powerBar.addBar()
+            
+            //remove the food the human has eaten
+            if nodeB.name == "food" {
+                let food = nodeB
+                toBeDeleted.append(food as! SKSpriteNode)
+            } else if nodeA.name == "food"{
+                let food = nodeA
+                toBeDeleted.append(food as! SKSpriteNode)
+            }
+        }
+        // else if nodeA.name == "player" && nodeB.name == "obstacle" {
 //            
 //            //Runs the shake scene to give the player something to see
 //            let shakeScene = SKAction.run({
@@ -265,7 +339,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //            
 //            self.player.run(shakeScene)
 //        }
-    }
+        
+    } //End of the didBeginContact func
     
 //    func didEnd(_ contact: SKPhysicsContact) {
 //        let contactA:SKPhysicsBody = contact.bodyA
@@ -306,6 +381,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+        
+        //Locks the Orientations HOPEFULLY TPODO: check if its working
         print("The lock is \(lock)")
         if lock == false {
             if UIDevice.current.orientation == UIDeviceOrientation.landscapeLeft {
@@ -322,10 +399,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 print("There is no orientation")
             }
             
+            
+            
         }
+        
+        print("there are \(powerBar.numOfBars)")
+        //TODO: fix the
         
         //Scroll the ground
         scroller(spd: scrollSpd)
+        
+        print(player.position)
+        //Check if the monster is going to eat the player
+        distanceFromMonster()
         
         //The accelerometer
         updateAcellerometerData()
@@ -336,18 +422,72 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Update the monster
         wolf.follow()
         
+        //Update the foods spawners
+        updateFood()
+        
         //Updates the animals
         updateAnimals()
         
         //Spawns the obstacles
         updateObstacles()
         
+        for object in toBeDeleted {
+            object.removeFromParent()
+        }
+        
+        toBeDeleted = [SKSpriteNode]()
+        
         //update time
+        foodSpawnTimer += fixedDelta
         animalSpawnTimer += fixedDelta
         secondSpawnTimer += fixedDelta
         spawnTimer += fixedDelta
         shakeTimer += fixedDelta
         animalMoveTimer += fixedDelta
+    }
+    
+    func boostsThePlayer() {
+        //Run the player's boost ability here
+        
+        if player.playerState == .ability { return }
+        
+        //Use up a bar
+        self.powerBar.removeBar()
+        
+        //Run the animations
+        let boost = SKAction.run({
+            let moveAction = SKAction.move(to: CGPoint(x: self.player.position.x + 10 , y: self.player.position.y), duration: 1)
+        
+            //Make the screen scroll faster
+            self.scrollSpd += 200
+        
+            //Chagnes the state to ability
+            //So when we collide it won't count
+            self.player.playerState = .ability
+        
+            //Make us run faster
+            self.player.running(spd: 0.3)
+            
+            self.player.run(moveAction)
+        })
+        
+        //Duration of the boosts
+        let wait = SKAction.wait(forDuration: 1)
+        
+        //Reset everythin
+        let reset = SKAction.run({
+            
+            //Reset scrollSpd
+            self.scrollSpd = 200
+            
+            //Change the player state back to running
+            self.player.running(spd: 0.5)
+            self.player.playerState = .running
+        })
+        
+        let theBoost = SKAction.sequence([boost, wait, reset])
+        player.run(theBoost)
+        
     }
     
     func updatePoints() {
@@ -411,11 +551,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //If so run an animation and change the scene
         print("Counter: \(distanceFromCenterCount)")
         
-        let attack = SKAction.run({
-            self.wolf.attack()
-        })
+        //If the player is in his ability mode get out
+        if player.playerState == .ability { return }
         
-        if distanceFromCenterCount <= 0 {
+        //Checking if the player isn't dead yet and if not make him run the death animation
+        if player.position.x <= CGFloat(0 - (distanceCounter * 4)) && player.playerState != .death {
+            
+            //Make sure there are no more active action
+            player.removeAllActions()
+            
+            player.playerState = .death 
+            player.position.x -= CGFloat(distanceCounter * 4 / 60) * CGFloat(fixedDelta)
+            
+            //Stop the music 
+            let stepSound = self.childNode(withName: "background") as! SKAudioNode
+            stepSound.removeFromParent()
+            
+            //Stop updating the acceleromter and stop player
+            //Do what ever to stop the player
+            //motionManager.stopAccelerometerUpdates()
+            multiplierSpd = 0
+            landscape = ""
+            
+            //Stop scrolling the background
+            scrollSpd = 0
+            
+            //Actions for the death scene
+            let attack = SKAction.run({
+                self.wolf.attack()
+            })
+            
             
             guard let skView = self.view as SKView! else {
                 print("could not get SKView")
@@ -429,7 +594,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //Enusre the aspect mode is correct
             scene.scaleMode = .aspectFit
             scene.lock = true
-            scene.multiplierSpd = self.multiplierSpd
+            
             //Show Debug
             skView.showsPhysics = true
             skView.showsDrawCount = true
@@ -441,8 +606,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let transition = SKTransition.moveIn(with: .right, duration: 1)
                 skView.presentScene(scene, transition: transition)
             })
-            let wait = SKAction.wait(forDuration: 1)
-            let seq = SKAction.sequence([attack, wait, changeScene])
+            
+            //Runs our hero's death animation
+            let runEaten = SKAction.run({
+                self.player.death()
+            })
+            
+            let wait1 = SKAction.wait(forDuration: 4)
+            let wait2 = SKAction.wait(forDuration: 0.5)
+            let seq = SKAction.sequence([attack, wait2, runEaten, wait1, changeScene])
             run(seq)
         }
     }
@@ -510,6 +682,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //print("other \(data)")
     }
     
+    func updateFood() {
+        
+        //Moves all the children on the food layer
+        
+        //Loops through all the foods in the layer
+        for food in foodLayer.children as! [Food] {
+            
+            let foodPosition = foodLayer.convert(food.position, to: self)
+            
+            food.position.x -= scrollSpd * CGFloat(fixedDelta)
+            if foodPosition.x <= -26 {
+                
+                print("we print the new food \(foodLayer.children)")
+                food.removeFromParent()
+            }
+        }
+        
+        //Make a new food
+        if foodSpawnTimer >= randFoodSpawnTimer {
+            
+            let newFood = Food()
+            foodLayer.addChild(newFood)
+            
+            foodSpawnTimer = 0
+            randFoodSpawnTimer = CFTimeInterval(arc4random_uniform(10) + 9)
+            
+        }
+    }
+    
     func updateAnimals() {
         
         //Loop through all the animals in the scene
@@ -548,8 +749,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("creature ayer = \(creatureLayer.children)")
             
             //Adding a new position TODO: Add random position
-            let newPosition = creatureSource.position
-            newAnimal.position = self.convert(newPosition, to: creatureLayer)
+            //let newPosition = creatureSource.position
+            //newAnimal.position = self.convert(newPosition, to: creatureLayer)
             newAnimal.gameScene = self
             newAnimal.state = .still
             

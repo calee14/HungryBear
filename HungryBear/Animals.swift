@@ -137,7 +137,7 @@ class Animals: SKSpriteNode {
     func getTexture() -> String {
         
         let rand = arc4random_uniform(100)
-        let textureAtlas = SKTextureAtlas(named: "animals")
+        
         //Gets an random texture for the animals
         if rand < 7 {
             //7% chance
