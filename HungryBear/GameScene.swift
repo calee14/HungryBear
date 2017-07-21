@@ -24,20 +24,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var fixedDelta: CFTimeInterval = 1.0/60.0 //60 FPS
     
     //Connect objects
-    var player: Player!
+    weak var player: Player!
     var obstaclelayer: SKNode!
-    var obstacleSource: Obstacle!
+    weak var obstacleSource: Obstacle!
     var creatureLayer: SKNode!
-    var creatureSource: Animals!
-    var wolf: Monster!
+    weak var creatureSource: Animals!
+    weak var wolf: Monster!
     var groundSource: SKSpriteNode!
     var groundSource2: SKSpriteNode!
     var bottomSource: SKSpriteNode!
     var bottomSource2: SKSpriteNode!
     var foodLayer: SKNode!
     var foodSource: SKNode!
-    var powerBar: PowerBar!
-    var powerButton: MSButtonNode!
+    weak var powerBar: PowerBar!
+    weak var powerButton: MSButtonNode!
     
     //Initialize variables
     var spawnTimer: CFTimeInterval = 0
@@ -57,13 +57,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var animalMoveTimer: CFTimeInterval = 0
     var multiplierSpd = -7.0
     var lock = false
-    var landscape = ""
     
     var toBeDeleted = [SKSpriteNode]()
     
     //Connect UI objects
     var pointsLabel: SKLabelNode!
     var highscoreLabel: SKLabelNode!
+    weak var pauseButton: MSButtonNode!
     
     override func didMove(to view: SKView) {
         //Setup your scene here
@@ -81,7 +81,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         powerButton = self.childNode(withName: "powerButton") as! MSButtonNode
         
-        powerButton.selectedHandler = {
+        powerButton.selectedHandler = { [unowned self] in
             
             //If the player is dead or no powerups the power ups don't have any effect
             if self.powerBar.numOfBars != 0 && self.player.playerState != .death {
@@ -116,6 +116,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Connect UI objects
         pointsLabel = childNode(withName: "pointsLabel") as! SKLabelNode
         highscoreLabel = self.childNode(withName: "highscoreLabel") as! SKLabelNode
+        pauseButton = self.childNode(withName: "pauseButton") as! MSButtonNode
+        
+        //Selected handler for the pause button
+        pauseButton.selectedHandler = { [unowned self] in
+            
+        }
         
         //Declaring swipe gestures
         //Creating the Swipe Right
@@ -147,7 +153,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Starts the accelerometer updates
         motionManager.startAccelerometerUpdates()
         motionManager.accelerometerUpdateInterval = 0.1
-        print("starting up the acceleromter")
         
         //Set the score label to 0
         pointsLabel.text = "\(points)"
@@ -157,7 +162,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let adjustVolume = SKAction.changeVolume(to: 1.0, duration: 0.0)
         let playAudio = SKAction.play()
         backgroundSound.name = "background"
-        print("the au\(backgroundSound)")
         backgroundSound.autoplayLooped = true
         
         //Add it to the scene and play it
@@ -165,10 +169,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         backgroundSound.run(adjustVolume)
         backgroundSound.run(playAudio)
         
+        //Also add the player footsteps in the background as well
+        let walkSound = SKAudioNode.init(fileNamed: "Walk-On-Grass")
+        let walkAdjustVolume = SKAction.changeVolume(to: 0.2, duration: 0.0)
+        let walkPlayAudio = SKAction.play()
+        walkSound.name = "walkingSound"
+        walkSound.autoplayLooped = true
+        self.addChild(walkSound)
+        walkSound.run(walkAdjustVolume)
+        walkSound.run(walkPlayAudio)
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
+        let touch = touches.first!
+        let location = touch.location(in: self.view)
+        
+        //Checking the position of the touch if it's on the button run the code
+        if location.x > 50 && location.x < 568 {
+            if location.y > 20 && location.y < 300 {
+                
+                //Pause or resume the game
+                guard let view = view else {
+                    return
+                }
+                view.isPaused = !view.isPaused
+            }
+        }
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -180,16 +208,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if nodeA.name == "creature" && nodeB.name == "obstacle" || nodeA.name == "obstacle" && nodeB.name == "creature" {
             if animalMoveTimer >= 0.4 {
-            print("the animal collided")
+                
             //Checks if it's the animal
             if nodeA.name == "creature" {
-                print("found the creature")
+                
                 //if we found the animals we check kill it
                 let nodeA = contactA.node as! Animals
                 
                 //Runs the death scene
                 if nodeA.position.x < 300 {
-                    print(nodeA.state)
                     
                     let deathScene = SKAction.run({
                         nodeA.deathScene()
@@ -201,13 +228,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             } else if nodeB.name == "creature" {
                 
-                print("found the creature")
                 //if we found the animals we check kill it
                 let nodeB = contactB.node as! Animals
                 
                 //Runs the death scene
                 if nodeB.position.x < 300 {
-                    print(nodeB.state)
                     
                     let deathScene = SKAction.run({
                         nodeB.deathScene()
@@ -265,8 +290,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //If player collides with the obstacle
         if nodeA.name == "player" && nodeB.name == "obstacle" || nodeB.name == "player" && nodeA.name == "obstacle" && player.playerState == .running {
-            print("It says player state is not ability it is \(player.playerState)")
-            if player.playerState == .ability { print("It says: player state says \(player.playerState)") }
             
             //Timer for running collision actions
             if shakeTimer > 0.7 && player.playerState != .ability{
@@ -286,7 +309,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let boomSound = SKAudioNode.init(fileNamed: "tree-crash")
                 let adjustVolume = SKAction.changeVolume(to: 0.6, duration: 0.0)
                 let playAudio = SKAction.play()
-                print("the au\(boomSound)")
                 boomSound.autoplayLooped = false
                 
                 //Add it to the scene and play it
@@ -296,7 +318,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 
                 ///
-                print("this is nodeB: \(nodeB)")
                 //Moves the player back
                 let move = SKAction.move(to: CGPoint(x: player.position.x - CGFloat(distanceCounter), y: player.position.y), duration: 1)
                 let seq = SKAction.sequence([move])
@@ -304,9 +325,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
                 //Updates the count of the counters to death
                 distanceFromCenterCount -= 1
-                print(distanceFromCenterCount)
                 distanceFromMonster()
-                print("something")
                 shakeTimer = 0
             }
             
@@ -382,34 +401,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         
-        //Locks the Orientations HOPEFULLY TPODO: check if its working
-        print("The lock is \(lock)")
-        if lock == false {
-            if UIDevice.current.orientation == UIDeviceOrientation.landscapeLeft {
-                print("landscape Left")
-                AppUtility.lockOrientation(.landscapeRight)
-                landscape = "right"
-                lock = true
-            } else if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
-                print("landScap Right")
-                AppUtility.lockOrientation(.landscapeLeft)
-                landscape = "left"
-                lock = true
-            } else {
-                print("There is no orientation")
-            }
-            
-            
-            
-        }
-        
-        print("there are \(powerBar.numOfBars)")
-        //TODO: fix the
-        
         //Scroll the ground
         scroller(spd: scrollSpd)
         
-        print(player.position)
         //Check if the monster is going to eat the player
         distanceFromMonster()
         
@@ -456,7 +450,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Run the animations
         let boost = SKAction.run({
-            let moveAction = SKAction.move(to: CGPoint(x: self.player.position.x + 10 , y: self.player.position.y), duration: 1)
+            
+            var push: CGFloat = 30
+            //Check the player position and see if it's beyond the maximum
+            if self.player.position.x + push > 50 {
+                
+                //Get the difference
+                push = 50 - self.player.position.x
+            }
+            let moveAction = SKAction.move(to: CGPoint(x: self.player.position.x + push , y: self.player.position.y), duration: 1)
         
             //Make the screen scroll faster
             self.scrollSpd += 200
@@ -549,29 +551,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func distanceFromMonster() {
         //Checks if we are going to be eaten by the monster
         //If so run an animation and change the scene
-        print("Counter: \(distanceFromCenterCount)")
         
         //If the player is in his ability mode get out
-        if player.playerState == .ability { return }
+        if player.playerState == .ability || player.playerState == .death { return }
+        
+        player.position.x -= CGFloat(distanceCounter * 4 / 60) * CGFloat(fixedDelta)
         
         //Checking if the player isn't dead yet and if not make him run the death animation
-        if player.position.x <= CGFloat(0 - (distanceCounter * 4)) && player.playerState != .death {
+        if player.position.x <= CGFloat(0 - (distanceCounter * 5) + 10) && player.playerState != .death {
             
             //Make sure there are no more active action
             player.removeAllActions()
             
-            player.playerState = .death 
-            player.position.x -= CGFloat(distanceCounter * 4 / 60) * CGFloat(fixedDelta)
+            player.playerState = .death
             
             //Stop the music 
             let stepSound = self.childNode(withName: "background") as! SKAudioNode
             stepSound.removeFromParent()
             
+            let walkSound = self.childNode(withName: "walkingSound") as! SKAudioNode
+            walkSound.removeFromParent()
+            
             //Stop updating the acceleromter and stop player
             //Do what ever to stop the player
             //motionManager.stopAccelerometerUpdates()
             multiplierSpd = 0
-            landscape = ""
+
             
             //Stop scrolling the background
             scrollSpd = 0
@@ -587,13 +592,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 return
             }
             //2) Load game scene
-            guard let scene = GameScene(fileNamed: "GameScene") else {
+            guard let scene = SKScene(fileNamed: "MainMenu") else {
                 print("Could not make GameScene, check the name is spelled correctly")
                 return
             }
             //Enusre the aspect mode is correct
             scene.scaleMode = .aspectFit
-            scene.lock = true
             
             //Show Debug
             skView.showsPhysics = true
@@ -669,14 +673,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //TODO: Check the data
         //print("turbines to speed")
-        let dir: String = landscape
         guard let data = motionManager.accelerometerData else { return }
         
-        if dir == "left" {
-           multiplierSpd = -7
-        } else if dir == "right" {
-            multiplierSpd = 7
-        }
         //Applying movement according to the data
         player.position = CGPoint(x: player.position.x, y: CGFloat(player.position.y) + CGFloat(multiplierSpd * data.acceleration.x))
         //print("other \(data)")
@@ -694,7 +692,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             food.position.x -= scrollSpd * CGFloat(fixedDelta)
             if foodPosition.x <= -26 {
                 
-                print("we print the new food \(foodLayer.children)")
                 food.removeFromParent()
             }
         }
@@ -746,7 +743,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //Creates the new animal
             let newAnimal = Animals()
             creatureLayer.addChild(newAnimal)
-            print("creature ayer = \(creatureLayer.children)")
             
             //Adding a new position TODO: Add random position
             //let newPosition = creatureSource.position
@@ -820,7 +816,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //Add second obstacle to bottom half
                 let secondObstacle = Obstacle()
                 secondObstacle.resetEverything()
-                print("new obstacle texture \(secondObstacle)")
                 obstaclelayer.addChild(secondObstacle)
             
                 //Generate the random y position for the bottom half of the screen

@@ -30,7 +30,7 @@ class Animals: SKSpriteNode {
     var boundaryTop: CGFloat = 300
     var boundaryDown: CGFloat = 20
     var count = 0.0
-    var gameScene: GameScene!
+    weak var gameScene: GameScene!
     
     //variables for picking our animal
     var species: String!
@@ -67,10 +67,8 @@ class Animals: SKSpriteNode {
         let imageName = species
         var imageArray: [SKTexture] = []
         for i in 1...3 {
-            print("i is = \(i)")
             imageArray.append(SKTexture(imageNamed: "\(imageName!)-\(i)"))
         }
-        print(imageArray)
         let animate = SKAction.repeatForever(SKAction.animate(with: imageArray, timePerFrame: 0.1))
         self.run(animate)
     }
@@ -96,9 +94,6 @@ class Animals: SKSpriteNode {
         //Build and run the sequence
         let seq = SKAction.sequence([moveTo0, attack, addPoints])
         self.run(seq)
-        
-        print(position)
-        print(distanceFrom0)
     }
     
     func getValues() {
@@ -192,7 +187,6 @@ class Animals: SKSpriteNode {
             species = "cat"
             sound = "cat"
         }
-        print("Animal \(species)")
         checkScaling(imageText: "\(species!)-1")
         return "\(species!)-1"
     }

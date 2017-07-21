@@ -142,8 +142,6 @@ class Obstacle: SKSpriteNode {
             
             self.xScale = CGFloat(newScale)
             self.yScale = CGFloat(newScale)
-            print(self.xScale)
-            print(self.yScale)
         }
 
     }

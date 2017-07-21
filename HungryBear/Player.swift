@@ -33,6 +33,7 @@ class Player: SKSpriteNode {
     }
     
     func running(spd: Double) {
+        print("running player.running")
         
         //Makes sure that there are no running actions left over
         self.removeAction(forKey: fallKey)
@@ -40,23 +41,11 @@ class Player: SKSpriteNode {
         //Gets the animation and run it
         let animationRun = SKAction.init(named: "Running")
         animationRun?.duration = TimeInterval(spd)
-        let run = SKAction.repeatForever(animationRun!)
-        self.run(run, withKey: fallKey)
-        
-        let crashSound = SKAudioNode.init(fileNamed: "Walk-On-Grass")
-        let adjustVolume = SKAction.changeVolume(to: 0.3, duration: 0.0)
-        let playAudio = SKAction.play()
-        crashSound.name = "walkingsound"
-        print("the au\(crashSound)")
-        crashSound.autoplayLooped = true
-        self.addChild(crashSound)
-        crashSound.run(adjustVolume)
-        crashSound.run(playAudio)
+        let repeatRun = SKAction.repeatForever(animationRun!)
+        self.run(repeatRun, withKey: fallKey)
     }
     
     func death() {
-        let stepSound = self.childNode(withName: "walkingsound") as! SKAudioNode
-        stepSound.removeFromParent()
         
         self.removeAction(forKey: fallKey)
         

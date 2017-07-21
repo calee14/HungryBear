@@ -34,6 +34,8 @@
 		B3209CA31F13E23B006DA8EA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3209CA11F13E23B006DA8EA /* LaunchScreen.storyboard */; };
 		B3209CAB1F13E346006DA8EA /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3209CAA1F13E346006DA8EA /* CGFloat+Extensions.swift */; };
 		B3209CAD1F141A6E006DA8EA /* Animals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3209CAC1F141A6E006DA8EA /* Animals.swift */; };
+		B33D8C331F212527009D35D7 /* SaranaiGame-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B33D8C321F2122A3009D35D7 /* SaranaiGame-Bold.ttf */; };
+		B33D8C351F217C43009D35D7 /* icon_2.png in Resources */ = {isa = PBXBuildFile; fileRef = B33D8C341F217C43009D35D7 /* icon_2.png */; };
 		B39F49651F1810BB00D95ED6 /* bottom-background.png in Resources */ = {isa = PBXBuildFile; fileRef = B39F49641F1810BB00D95ED6 /* bottom-background.png */; };
 		B39F49671F1811EB00D95ED6 /* background2.png in Resources */ = {isa = PBXBuildFile; fileRef = B39F49661F1811EB00D95ED6 /* background2.png */; };
 		B39F49691F18397400D95ED6 /* animals.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B39F49681F18397400D95ED6 /* animals.atlas */; };
@@ -285,6 +287,8 @@
 		B3209CA41F13E23B006DA8EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3209CAA1F13E346006DA8EA /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
 		B3209CAC1F141A6E006DA8EA /* Animals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animals.swift; sourceTree = "<group>"; };
+		B33D8C321F2122A3009D35D7 /* SaranaiGame-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SaranaiGame-Bold.ttf"; sourceTree = "<group>"; };
+		B33D8C341F217C43009D35D7 /* icon_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_2.png; sourceTree = "<group>"; };
 		B39F49641F1810BB00D95ED6 /* bottom-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottom-background.png"; sourceTree = "<group>"; };
 		B39F49661F1811EB00D95ED6 /* background2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background2.png; sourceTree = "<group>"; };
 		B39F49681F18397400D95ED6 /* animals.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = animals.atlas; sourceTree = "<group>"; };
@@ -576,6 +580,7 @@
 				B3C8DC4A1F1EC4F200D42DF4 /* food.atlas */,
 				B3C8DC4E1F1FC60A00D42DF4 /* Hungry-Bear-UI */,
 				B3209CA11F13E23B006DA8EA /* LaunchScreen.storyboard */,
+				B33D8C321F2122A3009D35D7 /* SaranaiGame-Bold.ttf */,
 				B3209CA41F13E23B006DA8EA /* Info.plist */,
 				B3D511C51F1697E700653C3B /* Wolf.sks */,
 				B3D511C71F1698BD00653C3B /* Monster.swift */,
@@ -600,6 +605,7 @@
 				B3C8DC521F1FC60A00D42DF4 /* energy_icon copy.png */,
 				B3C8DC531F1FC60A00D42DF4 /* icon_1 copy.png */,
 				B3C8DC541F1FC60A00D42DF4 /* icon_13 copy.png */,
+				B33D8C341F217C43009D35D7 /* icon_2.png */,
 				B3C8DC551F1FC60A00D42DF4 /* icon_21 copy.png */,
 				B3C8DC561F1FC60A00D42DF4 /* life_bar_back copy.png */,
 				B3C8DC751F1FC83300D42DF4 /* loading_bar_back.png */,
@@ -1017,6 +1023,7 @@
 				B3C8DC671F1FC60A00D42DF4 /* icon_13 copy.png in Resources */,
 				B3D511C41F1696DE00653C3B /* wolfWALKright (9).png in Resources */,
 				B3D5116B1F1696DE00653C3B /* grass-shadow-6.png in Resources */,
+				B33D8C351F217C43009D35D7 /* icon_2.png in Resources */,
 				B3D511F21F16DBBB00653C3B /* idle0008.png in Resources */,
 				B3D5121E1F17D9A500653C3B /* log-2-light-brown-left.png in Resources */,
 				B3D5114D1F1696DE00653C3B /* death0029.png in Resources */,
@@ -1062,6 +1069,7 @@
 				B3D512031F16DBBB00653C3B /* idle0025.png in Resources */,
 				B3C8DC711F1FC60A00D42DF4 /* speech_bubble_icon_back copy.png in Resources */,
 				B3D511351F1696DE00653C3B /* death0005.png in Resources */,
+				B33D8C331F212527009D35D7 /* SaranaiGame-Bold.ttf in Resources */,
 				B3C8DC701F1FC60A00D42DF4 /* Settings_text copy.png in Resources */,
 				B3D511371F1696DE00653C3B /* death0007.png in Resources */,
 				B3D511451F1696DE00653C3B /* death0021.png in Resources */,

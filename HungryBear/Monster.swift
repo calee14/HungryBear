@@ -17,7 +17,7 @@ enum MonsterState {
 class Monster: SKSpriteNode {
     
     //Get access to the game scene 
-    var gameScene: GameScene!
+    weak var gameScene: GameScene!
     let actionKey = "RemoveSoundKey"
     
     var monsterState: MonsterState = .walking {

@@ -35,7 +35,6 @@ class PowerBar: SKSpriteNode {
     }
     
     func addBar() {
-        print("the are \(numOfBars)")
         if numOfBars != maxNumOfBars {
             numOfBars += 1
             let newBar = self.childNode(withName: "bar\(numOfBars)") as! SKSpriteNode
@@ -44,7 +43,6 @@ class PowerBar: SKSpriteNode {
     }
     
     func removeBar() {
-        print("the are \(numOfBars)")
         
         if numOfBars != 0 {
             numOfBars -= 1
