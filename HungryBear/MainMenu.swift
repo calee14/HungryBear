@@ -8,6 +8,7 @@
 
 import Foundation
 import SpriteKit
+import CoreMotion
 
 class MainMenu: SKScene {
     
@@ -18,11 +19,26 @@ class MainMenu: SKScene {
     
     override func didMove(to view: SKView) {
         
+        //Play the audio file
+        //Start the background music
+        let backgroundSound = SKAudioNode.init(fileNamed: "BackgroundMix")
+        let adjustVolume = SKAction.changeVolume(to: 1.0, duration: 0.0)
+        let playAudio = SKAction.play()
+        backgroundSound.name = "background"
+        backgroundSound.autoplayLooped = true
+        
+        //Add it to the scene and play it
+        self.addChild(backgroundSound)
+        backgroundSound.run(adjustVolume)
+        backgroundSound.run(playAudio)
+        
         //Connect the UI objects
         playButton = self.childNode(withName: "playButton") as! MSButtonNode
         
         //playButton selected handler
         playButton.selectedHandler = { [unowned self] in
+            //let song = self.childNode(withName: "background")
+            //song?.removeFromParent()
             
             //Change the scene
             self.loadGame(fileName: "GameScene")
@@ -45,6 +61,7 @@ class MainMenu: SKScene {
             //Load the settings scene
             print("No button action set")
         }
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

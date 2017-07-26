@@ -15,6 +15,9 @@ enum Direction {
     case up, down, right, left, still
 }
 
+enum Controls {
+    case tilt, swipe
+}
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let motionManager = CMMotionManager()
@@ -28,7 +31,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var obstaclelayer: SKNode!
     weak var obstacleSource: Obstacle!
     var creatureLayer: SKNode!
-    weak var creatureSource: Animals!
+    var creatureSource: Animals!
     weak var wolf: Monster!
     var groundSource: SKSpriteNode!
     var groundSource2: SKSpriteNode!
@@ -44,7 +47,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var secondSpawnTimer: CFTimeInterval = 0
     var animalSpawnTimer: CFTimeInterval = 0
     var foodSpawnTimer: CFTimeInterval = 0
-    var randFoodSpawnTimer: CFTimeInterval = 10
+    var doomTimer: CFTimeInterval = 0
+    var randFoodSpawnTimer: CFTimeInterval = 7
     var randObstacleSpawnTimer: CFTimeInterval = 1
     var randAnimalSpawnTimer: CFTimeInterval = 5
     var scrollSpd: CGFloat = 200
@@ -57,14 +61,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var animalMoveTimer: CFTimeInterval = 0
     var multiplierSpd = -7.0
     var lock = false
-    
+    var scaleTimer: CFTimeInterval = 0
     var toBeDeleted = [SKSpriteNode]()
+    var controls: Controls = .tilt
     
     //Connect UI objects
-    var pointsLabel: SKLabelNode!
+    var scoreLabel: SKLabelNode!
     var highscoreLabel: SKLabelNode!
-    weak var pauseButton: MSButtonNode!
+    var pauseButton: SKSpriteNode!
+    var miniTutorial: SKSpriteNode!
     
+    static var stayPaused = false as Bool
+    
+    override var isPaused: Bool {
+        get {
+            return super.isPaused
+        } set {
+            if newValue || !GameScene.stayPaused {
+                super.isPaused = newValue
+            }
+            GameScene.stayPaused = false
+        }
+    }
     override func didMove(to view: SKView) {
         //Setup your scene here
         
@@ -114,14 +132,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         creatureSource = self.childNode(withName: "creature") as! Animals
         
         //Connect UI objects
-        pointsLabel = childNode(withName: "pointsLabel") as! SKLabelNode
+        scoreLabel = childNode(withName: "pointsLabel") as! SKLabelNode
         highscoreLabel = self.childNode(withName: "highscoreLabel") as! SKLabelNode
-        pauseButton = self.childNode(withName: "pauseButton") as! MSButtonNode
-        
-        //Selected handler for the pause button
-        pauseButton.selectedHandler = { [unowned self] in
-            
-        }
+        pauseButton = self.childNode(withName: "pauseButton") as! SKSpriteNode
+        pauseButton.isHidden = true
+        miniTutorial = self.childNode(withName: "miniTutorial") as! SKSpriteNode
         
         //Declaring swipe gestures
         //Creating the Swipe Right
@@ -154,8 +169,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         motionManager.startAccelerometerUpdates()
         motionManager.accelerometerUpdateInterval = 0.1
         
+        
         //Set the score label to 0
-        pointsLabel.text = "\(points)"
+        scoreLabel.text = "\(points)"
         
         //Start the background music
         let backgroundSound = SKAudioNode.init(fileNamed: "BackgroundMix3")
@@ -179,6 +195,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         walkSound.run(walkAdjustVolume)
         walkSound.run(walkPlayAudio)
         
+        //Saving NSUserDefaults
+        let scoreDefault = UserDefaults.standard
+        
+        if scoreDefault.integer(forKey: "highscore") != 0 {
+            highscore = scoreDefault.integer(forKey: "highscore")
+        } else {
+            highscore = 0
+        }
+        highscoreLabel.text = String("Highscore: \(highscore)")
+        print(highscore)
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -189,12 +216,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Checking the position of the touch if it's on the button run the code
         if location.x > 50 && location.x < 568 {
             if location.y > 20 && location.y < 300 {
-                
-                //Pause or resume the game
-                guard let view = view else {
-                    return
+                if self.isPaused == false {
+                    //Pause the game
+                    self.pauseButton.isHidden = false
+                    self.powerButton.isDisabled = true
+                    self.isPaused = true
+                    self.physicsWorld.speed = 0
+                    
+                } else if self.isPaused == true {
+                    //Resume the game
+                    self.pauseButton.isHidden = true
+                    self.powerButton.isDisabled = false
+                    self.isPaused = false
+                    self.physicsWorld.speed = 1
+                    
                 }
-                view.isPaused = !view.isPaused
             }
         }
     }
@@ -294,10 +330,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //Timer for running collision actions
             if shakeTimer > 0.7 && player.playerState != .ability{
                 //Runs the shake scene to give the player something to see
-                let shakeScene = SKAction.run({
-                let shake = SKAction.init(named: "ShakeItUp")
-                for node in self.children {
-                    node.run(shake!)
+                let shakeScene = SKAction.run({ [unowned self] in
+                    let shake = SKAction.init(named: "ShakeItUp")
+                    for node in self.children {
+                        node.run(shake!)
                     }
                 })
                 
@@ -398,8 +434,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        }
     //}
     
+    //MARK: - Update Function
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+        
+        //Close the tutorial 
+        tutorial()
+        
+        //Pulse the button
+        pulseTheButton()
         
         //Scroll the ground
         scroller(spd: scrollSpd)
@@ -432,6 +475,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         toBeDeleted = [SKSpriteNode]()
         
         //update time
+        doomTimer += fixedDelta
+        scaleTimer += fixedDelta
         foodSpawnTimer += fixedDelta
         animalSpawnTimer += fixedDelta
         secondSpawnTimer += fixedDelta
@@ -440,6 +485,47 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         animalMoveTimer += fixedDelta
     }
     
+    func tutorial() {
+        
+        //Declaring user defaults
+        let userDefaults = UserDefaults.standard
+        
+        //Check if the user has done the tutorials
+        if userDefaults.integer(forKey: "tutorials") > 7 { return }
+        
+        //Mini Tutorial
+        if miniTutorial.alpha != 0 {
+            miniTutorial.alpha -= 0.005
+        }
+        
+        //If the tutorial thingy is gone update the count
+        if miniTutorial.alpha == 0 {
+            //update the tutorial count
+            var tutorialCount = 0
+            tutorialCount = userDefaults.integer(forKey: "tutorials")
+            tutorialCount += 1
+            userDefaults.set(tutorialCount, forKey: "tutorials")
+        }
+    }
+    
+    func pulseTheButton() {
+        if scaleTimer > 1.0 && powerButton.state != .Selected && powerBar.numOfBars >= 4 {
+            //pulse the button
+            let scaleSmall = SKAction.run {
+                self.powerButton.xScale = 0.195
+                self.powerButton.yScale = 0.195
+            }
+            let wait = SKAction.wait(forDuration: 0.5)
+            let scaleBig = SKAction.run({
+                self.powerButton.xScale = 0.2
+                self.powerButton.yScale = 0.2
+            })
+            let seq = SKAction.sequence([scaleSmall, wait, scaleBig])
+            run(seq)
+            scaleTimer = 0
+        }
+    }
+    //MARK: - save the player
     func boostsThePlayer() {
         //Run the player's boost ability here
         
@@ -449,7 +535,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.powerBar.removeBar()
         
         //Run the animations
-        let boost = SKAction.run({
+        let boost = SKAction.run({ [unowned self] in
             
             var push: CGFloat = 30
             //Check the player position and see if it's beyond the maximum
@@ -473,11 +559,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.player.run(moveAction)
         })
         
+        //whoost audio
+        let whooshSound = SKAudioNode.init(fileNamed: "whoosh")
+        let adjustVolume = SKAction.changeVolume(to: 1.0, duration: 0.0)
+        let playAudio = SKAction.play()
+        whooshSound.name = "whoosh"
+        whooshSound.autoplayLooped = false
+        
+        //Add it to the scene and play it
+        self.addChild(whooshSound)
+        whooshSound.run(adjustVolume)
+        whooshSound.run(playAudio)
+        print(whooshSound)
+        
         //Duration of the boosts
         let wait = SKAction.wait(forDuration: 1)
         
         //Reset everythin
-        let reset = SKAction.run({
+        let reset = SKAction.run({ [unowned self] in
             
             //Reset scrollSpd
             self.scrollSpd = 200
@@ -494,10 +593,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func updatePoints() {
         //Add points
-        points += 5
+        points += 1
         
         //Update the label
-        pointsLabel.text = String(points)
+        scoreLabel.text = String(points)
+        
+        if points > highscore {
+            highscore = points
+            let scoreDefault = UserDefaults.standard
+            scoreDefault.set(highscore, forKey: "highscore")
+        }
+        highscoreLabel.text = String("Highscore: \(highscore)")
+        print(highscore)
+        
+        //Update ScoreLbael
+        scoreLabel.text = String(points)
     }
     
     func scroller(spd: CGFloat) {
@@ -555,7 +665,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //If the player is in his ability mode get out
         if player.playerState == .ability || player.playerState == .death { return }
         
-        player.position.x -= CGFloat(distanceCounter * 4 / 60) * CGFloat(fixedDelta)
+        var doomCounter = 60.0 - doomTimer
+        if doomCounter < 25 {
+            doomCounter = 25
+        }
+        print(doomCounter)
+        //If the player is still alive pusnish him and make the monster catch up to him
+        player.position.x -= CGFloat(Double(distanceCounter * 4) / doomCounter) * CGFloat(fixedDelta)
         
         //Checking if the player isn't dead yet and if not make him run the death animation
         if player.position.x <= CGFloat(0 - (distanceCounter * 5) + 10) && player.playerState != .death {
@@ -576,13 +692,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //Do what ever to stop the player
             //motionManager.stopAccelerometerUpdates()
             multiplierSpd = 0
-
+            stopUpdates()
             
             //Stop scrolling the background
             scrollSpd = 0
             
             //Actions for the death scene
-            let attack = SKAction.run({
+            let attack = SKAction.run({ [unowned self] in
                 self.wolf.attack()
             })
             
@@ -592,7 +708,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 return
             }
             //2) Load game scene
-            guard let scene = SKScene(fileNamed: "MainMenu") else {
+            guard let scene = SKScene(fileNamed: "RestartScene") as! RestartScene! else {
                 print("Could not make GameScene, check the name is spelled correctly")
                 return
             }
@@ -604,15 +720,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             skView.showsDrawCount = true
             skView.showsFPS = true
             
-            
             //4)
             let changeScene = SKAction.run({
-                let transition = SKTransition.moveIn(with: .right, duration: 1)
-                skView.presentScene(scene, transition: transition)
+                
+                //Give the restart scene our score
+                scene.score = self.points
+                
+                skView.presentScene(scene)
             })
             
+            //5) Give the restart scene the scores
+            
             //Runs our hero's death animation
-            let runEaten = SKAction.run({
+            let runEaten = SKAction.run({ [unowned self] in
                 self.player.death()
             })
             
@@ -624,7 +744,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func swiped(_ gesture: UIGestureRecognizer) {
-        
+        if controls == .tilt { return }
         //Checks if we are swiping
         
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
@@ -668,8 +788,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func updateAcellerometerData() {
         //While accelerometerData is active and force is being applied Clamp speed
-        player.physicsBody?.velocity.dx.clamp(v1: -600, 600)
-        player.physicsBody?.velocity.dy.clamp(v1: -600, 600)
         
         //TODO: Check the data
         //print("turbines to speed")
@@ -677,7 +795,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Applying movement according to the data
         player.position = CGPoint(x: player.position.x, y: CGFloat(player.position.y) + CGFloat(multiplierSpd * data.acceleration.x))
-        //print("other \(data)")
+        //print("the \(data)")
     }
     
     func updateFood() {
@@ -703,7 +821,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             foodLayer.addChild(newFood)
             
             foodSpawnTimer = 0
-            randFoodSpawnTimer = CFTimeInterval(arc4random_uniform(10) + 9)
+            randFoodSpawnTimer = CFTimeInterval(arc4random_uniform(5) + 3)
             
         }
     }
@@ -833,7 +951,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func stopUpdates() {
-        print("stop updating the data")
+        //print("stop updating the data")
         motionManager.stopAccelerometerUpdates()
     }
 }

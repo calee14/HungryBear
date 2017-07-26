@@ -75,8 +75,8 @@ class Animals: SKSpriteNode {
     
     func deathScene() {
         //Gets position
-        let position = self.position
-        let distanceFrom0 = self.position.x.distance(to: 0)
+        //let position = self.position
+        //let distanceFrom0 = self.position.x.distance(to: 0)
         
         //Set the animal to do nothing
         state = .idle
@@ -84,10 +84,10 @@ class Animals: SKSpriteNode {
         //Creating our death scene; move to the end and delete
         let moveTo0 = SKAction.move(to: CGPoint(x: 30, y: self.position.y), duration: 2)
         
-        let addPoints = SKAction.run ({
+        let addPoints = SKAction.run ({ [unowned self] in
             self.gameScene.updatePoints()
         })
-        let attack = SKAction.run({
+        let attack = SKAction.run({ [unowned self] in
             self.deathAnimation()
         })
         
@@ -272,21 +272,23 @@ class Animals: SKSpriteNode {
         
         //Run the eat animation and remove the node
         let eat = SKAction.init(named: "Eat")
+        let removeTheAnimal = SKAction.run({ [unowned self] in
+            self.removeFromParent()
+            //print("we removed \(self)")
+        })
+        
         let removeAnimal = SKAction.run({
             let wait = SKAction.wait(forDuration: 0.1)
-            let removeTheAnimal = SKAction.run({
-                self.removeFromParent()
-            })
             let seq = SKAction.sequence([wait , cry , crunch, removeTheAnimal])
             newNode.run(seq)
         })
         
         //Remove the new wolf node
+        let deleteNode = SKAction.run ({ [unowned newNode] in
+            newNode.removeFromParent()
+        })
         let removeNode = SKAction.run({
             let wait = SKAction.wait(forDuration: 0.66)
-            let deleteNode = SKAction.run ({
-                newNode.removeFromParent()
-            })
             let seq = SKAction.sequence([wait, deleteNode])
             newNode.run(seq)
         })

@@ -52,7 +52,7 @@ class Food: SKSpriteNode {
         
         //Creating a new animal
         //Position, name, size, physics, etc.
-        let position = CGPoint(x: 885, y: Int(arc4random_uniform(280) + 40))
+        let position = CGPoint(x: 885, y: Int(arc4random_uniform(240) + 40))
         let name = "food"
         let size = newTexture.size()
         let physics = SKPhysicsBody(rectangleOf: CGSize(width: newTexture.size().width, height: newTexture.size().height), center: CGPoint(x: 0, y: 0))
