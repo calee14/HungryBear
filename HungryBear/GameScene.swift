@@ -486,25 +486,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func tutorial() {
-        
+        //var done = false
         //Declaring user defaults
         let userDefaults = UserDefaults.standard
         
         //Check if the user has done the tutorials
-        if userDefaults.integer(forKey: "tutorials") > 7 { return }
+        if userDefaults.integer(forKey: "tutorials") > 7 {
+            miniTutorial.isHidden = true
+            return
+        }
+        if miniTutorial.alpha < 0 && miniTutorial.isHidden == true { return }
+        print(userDefaults.integer(forKey: "tutorials"))
         
         //Mini Tutorial
-        if miniTutorial.alpha != 0 {
+        if miniTutorial.alpha >= 0 {
             miniTutorial.alpha -= 0.005
-        }
-        
-        //If the tutorial thingy is gone update the count
-        if miniTutorial.alpha == 0 {
+            print("mini = \(miniTutorial.alpha)")
+        } else {
+            //If the tutorial thingy is gone update the count
             //update the tutorial count
             var tutorialCount = 0
             tutorialCount = userDefaults.integer(forKey: "tutorials")
+            print("adfa")
             tutorialCount += 1
+            print("turtorial count = \(tutorialCount)")
             userDefaults.set(tutorialCount, forKey: "tutorials")
+            miniTutorial.isHidden = true
         }
     }
     
